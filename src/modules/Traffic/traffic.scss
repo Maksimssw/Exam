@@ -1,0 +1,58 @@
+body{
+    background: #77b4d4;
+    font-family: 'Roboto Slab', serif;
+}
+
+.container{
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.header{
+    &__traffic_lights{
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+    &__title{
+        font-size: 26px;
+        text-align: center;
+    }
+}
+
+.traffic{
+    padding: 40px 0;
+    &__wrapper{
+        width: 600px;
+        padding: 20px 0;
+        background: #4e5d73;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+    &__btn{
+        width: 100px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #f5d088;
+        border-radius: 10px;
+    }
+    &__list{
+        display: flex;
+        justify-content: space-between;  
+    }
+    &__link{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        vertical-align: middle;
+        color: #fff;
+        font-weight: 700;
+        transition: 0.3s all;
+        &:hover, &:focus{
+            outline: none;
+            color: #ffd05b;
+        }
+    }
+}
