@@ -2,7 +2,7 @@
 import Traffic from "../Traffic/Traffic";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { Suspense } from "react";
-import { TicketsPage } from "../Pages";
+import { TicketsPage, TicketPage } from "../Pages";
 
 const App = () => {
     return (
@@ -11,6 +11,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Traffic/>}/>
                     <Route path="/tickets" element={<TicketsPage/>}/>
+                    <Route path="/tickets/:idTicket" element={<TicketPage/>}/>
                 </Routes>
             </Router>
         </Suspense>
