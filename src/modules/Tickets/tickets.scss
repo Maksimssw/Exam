@@ -1,0 +1,45 @@
+.tickets{
+    padding: 60px 0;
+    &__progress{
+        position: relative;
+        width: 100%;
+        background-color: #808080;
+        height: 3px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    &__title{
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    &__active{
+        top: 0;
+        left: 0;
+        position: absolute;
+        height: 3px;
+        background-color: #85b73e;
+    }
+}
+
+.back{
+    border-bottom: 1px solid #f7f1fb;
+    padding: 30px 0;
+    &__wrapper{
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    &__text{
+        font-size: 24px;
+    }
+}
+
+.arrow{
+    &_left{
+        font-size: 24px;
+        transition: 0.3s all;
+        &:hover, &:focus{
+            transform: translateX(-10px);
+        }
+    }
+}

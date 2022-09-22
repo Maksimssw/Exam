@@ -2,8 +2,7 @@
 import Traffic from "../Traffic/Traffic";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { Suspense } from "react";
-import Themes from "../Themes/Themes";
-import Topic from "../Topic/Topic";
+import { TicketsPage } from "../Pages";
 
 const App = () => {
     return (
@@ -11,8 +10,7 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Traffic/>}/>
-                    <Route path="/themes" element={<Themes/>}/>
-                    <Route path="/themes/:idTopic" element={<Topic/>}/>
+                    <Route path="/tickets" element={<TicketsPage/>}/>
                 </Routes>
             </Router>
         </Suspense>
