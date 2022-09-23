@@ -29,7 +29,6 @@ const TicketPage = () => {
                 return el;
             };
         })
-
         setTicket(res);
     }
 
