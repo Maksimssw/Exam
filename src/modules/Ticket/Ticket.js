@@ -1,35 +1,23 @@
 import './ticket.scss';
 import Loading from '../Loading/Loading';
+import { useState, useRef } from 'react';
+import Questions from '../Questions/Questions';
 
 const Ticket = (props) => {
 
     const {ticket} = props;
 
-    const numbers = ticket === undefined ? null : ticket.map(el => {
-
-        // Получение номера вопроса
-        const num = el.title.replace(/\D/g, '');
-
-        // Создание номера
-        return (
-            <li key={num} className='numbers__list'>
-                {num}
-            </li>
-        )
-    });
-    
-
-    // В случае если данные еще не пришли, то номера выставлятся не будут
-    const ticketNumber = ticket === undefined ? null : <TicketNumber numbers={numbers}/>
-
     // Компонент загрузки 
     const loading = ticket === undefined ? <Loading/> : null;
+
+    // Компонент всех вопросов одного билета
+    const questions = ticket === undefined ? null : <Questions ticket={ticket}/>
 
     return(
         <div className='ticket'>
             <div className='container'>
                 <div className='ticket__numbers'>
-                    {ticketNumber}
+                    {questions}
                     {loading}
                 </div>
             </div>
@@ -37,16 +25,5 @@ const Ticket = (props) => {
     )
 }
 
-const TicketNumber = (props) =>{
-
-    // Номера всех вопросов
-    const {numbers} = props
-
-    return(
-        <ul className='numbers'>
-            {numbers}
-        </ul>
-    )
-}
 
 export default Ticket;
