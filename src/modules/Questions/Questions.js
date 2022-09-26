@@ -1,5 +1,6 @@
 import './questions.scss';
 import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const Questions = (props) =>{
 
@@ -24,13 +25,10 @@ const Questions = (props) =>{
         }
     }
 
-    /* if(el.classList.contains('right') || el.classList.contains('mistake')){}else{
-        if(boolean){
-            answer.classList.add('right')
-        } else{
-            answer.classList.add('mistake')
-        }  
-    }*/
+    // Обработка правильного ответа
+    const processingCorrectAnswer = () => {
+
+    }
 
     const [translateX, setTranslateX] = useState(0);
     const width = useRef();
@@ -66,7 +64,7 @@ const Questions = (props) =>{
                 <ul className='answers'>
                     {answerWrapper}
                 </ul>
-                <div className='mistake hidden'>
+                <div hidden className='mistake'>
                     <p className='mistake__correct'>{correct_answer}</p>
                     <p className='mistake__answer'>{answer_tip}</p>
                     <p className='mistake__topic'>{topic}</p>
@@ -114,9 +112,14 @@ const TicketNumber = (props) =>{
     });
 
     return(
-        <ul className='numbers'>
-            {numbers}
-        </ul>
+        <>
+            <div className='back back_ticket'>
+                <Link to="/tickets">← Вернутся ко всем билетам</Link>
+            </div>
+            <ul className='numbers'>
+                {numbers}
+            </ul>
+        </>
     )
 }
 

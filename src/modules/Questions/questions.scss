@@ -18,6 +18,15 @@
     }
 }
 
+.back{
+    a{
+        color: #000;
+    }
+    &_ticket{
+        border: none;
+    }
+}
+
 .answers{
     &__list{
         background: #f5f5f5;

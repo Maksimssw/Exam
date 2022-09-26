@@ -7,7 +7,8 @@
 .numbers{
     display: flex;
     gap: 10px;
-    width: 400%;
+    width: 100%;
+    flex-wrap: wrap;
     &__list{
         width: 40px;
         height: 40px;
