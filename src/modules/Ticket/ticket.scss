@@ -20,8 +20,16 @@
         cursor: pointer;
         transition: 0.3s all;
         border-radius: 10px;
-        &:hover, &:focus{
+        &:hover, &:focus, &:active{
             background-color: #e7e3e3;
         }
+    }
+}
+
+.numbers__list.active{
+    background: #85b73e;
+    color: #fff;
+    &:hover, &:focus{
+        color: #85b73e;
     }
 }

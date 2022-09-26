@@ -1,10 +1,16 @@
 import './questions.scss';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Questions = (props) =>{
 
     const {ticket} = props;
+
+    // Номер правильного ответа
+    const [rightAnswers, setRightAnswers] = useState();
+
+    // Номера неправильных ответов
+    const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
@@ -18,6 +24,7 @@ const Questions = (props) =>{
             if(boolean){
                 answer.classList.add('right');
                 answersWrapper.classList.add('hidden');
+                processingCorrectAnswer(answer);
             } else{
                 answer.classList.add('mistake');
                 answersWrapper.classList.add('hidden');
@@ -26,8 +33,15 @@ const Questions = (props) =>{
     }
 
     // Обработка правильного ответа
-    const processingCorrectAnswer = () => {
+    const processingCorrectAnswer = (answer) => {
+        // Получение Родителя
+        const ticketWrapper = answer.closest('.question');
 
+        // Номер вопроса
+        const num  = +ticketWrapper.querySelector('.question__title').innerText.replace(/\D/g, '');
+        setRightAnswers(num)
+        
+        numberProcessing(num + 1);
     }
 
     const [translateX, setTranslateX] = useState(0);
@@ -76,7 +90,11 @@ const Questions = (props) =>{
 
     return(
         <>
-            <TicketNumber ticket={ticket} numberProcessing={numberProcessing}/>
+            <TicketNumber 
+                ticket={ticket} 
+                numberProcessing={numberProcessing}
+                rightAnswers={rightAnswers}
+                incorrectAnswers={incorrectAnswers}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`
@@ -91,12 +109,22 @@ const Questions = (props) =>{
 const TicketNumber = (props) =>{
 
     // Номера всех вопросов
-    const {ticket, numberProcessing} = props
+    const {ticket, numberProcessing, rightAnswers, incorrectAnswers} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
         numberProcessing(+e.target.innerText);
     }
+
+    const list = useRef();
+
+    useEffect(() => {
+        if(rightAnswers){
+            const ticketNum = document.getElementById(`${rightAnswers}`);
+            ticketNum.classList.add('answered');
+            ticketNum.classList.add('active')
+        }
+    }, [rightAnswers])
 
     const numbers = ticket === undefined ? null : ticket.map(el => {
 
@@ -105,7 +133,7 @@ const TicketNumber = (props) =>{
 
         // Создание номера
         return (
-            <li onClick={(e) => getQuestionNumber(e)} key={num} className='numbers__list'>
+            <li onClick={(e) => getQuestionNumber(e)} id={num} key={num} className='numbers__list'>
                 {num}
             </li>
         )
@@ -116,7 +144,7 @@ const TicketNumber = (props) =>{
             <div className='back back_ticket'>
                 <Link to="/tickets">← Вернутся ко всем билетам</Link>
             </div>
-            <ul className='numbers'>
+            <ul ref={list} className='numbers'>
                 {numbers}
             </ul>
         </>
