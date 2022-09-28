@@ -1,0 +1,37 @@
+.numbers{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+    &__list{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s all;
+        border-radius: 10px;
+        &:hover, &:focus, &:active{
+            background-color: #e7e3e3;
+        }
+    }
+}
+
+.numbers__list.active{
+    background: #85b73e;
+    color: #fff;
+    &:hover, &:focus{
+        color: #85b73e;
+    }
+}
+
+.numbers__list.wrong{
+    background: #db011c;
+    color: #fff;
+    &:hover, &:focus{
+        color: #db011c;
+    }
+}

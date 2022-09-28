@@ -1,6 +1,6 @@
 import './questions.scss';
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import TicketNumber from '../TicketNumber/TicketNumber';
 
 const Questions = (props) =>{
 
@@ -14,10 +14,15 @@ const Questions = (props) =>{
 
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
+        // Получение нажатого элемента
         const answer = e.target;
 
         const answersWrapper = answer.closest('.answers');
 
+        // boolean приходит с JSON
+        // true - Пользователь ответил правильно и активируется функция  обработки правильного ответа
+        // false - Пользователь ответил неправильно и активируется функция обработки неправильного ответа
+        
         if(answersWrapper.classList.contains('hidden')){
 
         }else{
@@ -28,26 +33,44 @@ const Questions = (props) =>{
             } else{
                 answer.classList.add('mistake');
                 answersWrapper.classList.add('hidden');
+                handlingIncorrectResponse(answer);
             } 
         }
     }
 
-    // Обработка правильного ответа
-    const processingCorrectAnswer = (answer) => {
+    // Пойск номера вопроса 
+    function searchTicket(answer){
         // Получение Родителя
         const ticketWrapper = answer.closest('.question');
 
         // Номер вопроса
-        const num  = +ticketWrapper.querySelector('.question__title').innerText.replace(/\D/g, '');
+        const res = +ticketWrapper.querySelector('.question__title').innerText.replace(/\D/g, '');
+        return res;
+    }
+
+    // Обработка правильного ответа
+    const processingCorrectAnswer = (answer) => {
+
+        const num = searchTicket(answer);
+
         setRightAnswers(num)
         
+        // Скролл к следующему вопросу
         numberProcessing(num + 1);
+    }
+
+    // Обработка неправильного ответа
+    const handlingIncorrectResponse = (answer) =>{
+        
+        const num = searchTicket(answer);
+
+        setIncorrectAnswers(num);
     }
 
     const [translateX, setTranslateX] = useState(0);
     const width = useRef();
 
-    // Получение нажатого номера
+    // Скролл к следующему вопросу
     const numberProcessing = (num) => {
         setTranslateX(num * width.current.offsetWidth - width.current.offsetWidth);
     }
@@ -102,51 +125,6 @@ const Questions = (props) =>{
                     {question}
                 </ul>
             </div>
-        </>
-    )
-}
-
-const TicketNumber = (props) =>{
-
-    // Номера всех вопросов
-    const {ticket, numberProcessing, rightAnswers, incorrectAnswers} = props
-
-    // Получение номера 1 вопроса
-    const getQuestionNumber = (e) => {
-        numberProcessing(+e.target.innerText);
-    }
-
-    const list = useRef();
-
-    useEffect(() => {
-        if(rightAnswers){
-            const ticketNum = document.getElementById(`${rightAnswers}`);
-            ticketNum.classList.add('answered');
-            ticketNum.classList.add('active')
-        }
-    }, [rightAnswers])
-
-    const numbers = ticket === undefined ? null : ticket.map(el => {
-
-        // Получение номера вопроса
-        const num = el.title.replace(/\D/g, '');
-
-        // Создание номера
-        return (
-            <li onClick={(e) => getQuestionNumber(e)} id={num} key={num} className='numbers__list'>
-                {num}
-            </li>
-        )
-    });
-
-    return(
-        <>
-            <div className='back back_ticket'>
-                <Link to="/tickets">← Вернутся ко всем билетам</Link>
-            </div>
-            <ul ref={list} className='numbers'>
-                {numbers}
-            </ul>
         </>
     )
 }
