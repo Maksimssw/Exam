@@ -10,7 +10,7 @@ const Questions = (props) =>{
     const [rightAnswers, setRightAnswers] = useState();
 
     // Номера неправильных ответов
-    const [incorrectAnswers, setIncorrectAnswers] = useState([]);
+    const [incorrectAnswers, setIncorrectAnswers] = useState();
 
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
@@ -31,7 +31,7 @@ const Questions = (props) =>{
                 answersWrapper.classList.add('hidden');
                 processingCorrectAnswer(answer);
             } else{
-                answer.classList.add('mistake');
+                answer.classList.add('wrong');
                 answersWrapper.classList.add('hidden');
                 handlingIncorrectResponse(answer);
             } 
@@ -39,7 +39,7 @@ const Questions = (props) =>{
     }
 
     // Пойск номера вопроса 
-    function searchTicket(answer){
+    function searchNum(answer){
         // Получение Родителя
         const ticketWrapper = answer.closest('.question');
 
@@ -51,7 +51,7 @@ const Questions = (props) =>{
     // Обработка правильного ответа
     const processingCorrectAnswer = (answer) => {
 
-        const num = searchTicket(answer);
+        const num = searchNum(answer);
 
         setRightAnswers(num)
         
@@ -62,9 +62,27 @@ const Questions = (props) =>{
     // Обработка неправильного ответа
     const handlingIncorrectResponse = (answer) =>{
         
-        const num = searchTicket(answer);
+        const num = searchNum(answer);
 
         setIncorrectAnswers(num);
+
+        // Получение блока с ошибкой
+        const question  = answer.closest('.question');
+        const mistake = question.querySelector('.mistake');
+
+        // Удаление атрибута hidden для отображения правильного ответа и кнопки 
+        mistake.removeAttribute('hidden');
+    }
+
+    // Обработка кнопки "Следующий вопрос"
+    const nextQuestion = (e) => {
+        e.preventDefault();
+
+        // Получение номера вопроса 
+        const num = searchNum(e.target);
+        
+        // Скролл к следующему вопросу
+        numberProcessing(num + 1);
     }
 
     const [translateX, setTranslateX] = useState(0);
@@ -105,7 +123,9 @@ const Questions = (props) =>{
                     <p className='mistake__correct'>{correct_answer}</p>
                     <p className='mistake__answer'>{answer_tip}</p>
                     <p className='mistake__topic'>{topic}</p>
-                    <button className='mistake__btn'>СЛЕДУЮЩИЙ ВОПРОС</button>
+                    <button 
+                        className='mistake__btn'
+                        onClick={(e) => nextQuestion(e)}>СЛЕДУЮЩИЙ ВОПРОС</button>
                 </div>
             </li>
         )

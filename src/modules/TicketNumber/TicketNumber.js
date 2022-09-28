@@ -33,9 +33,10 @@ const TicketNumber = (props) =>{
         }
     }
 
+     // Добавление стилей для неправильного ответа
     const questionNumberWrong = () => {
         if(incorrectAnswers){
-            const ticketNum = document.getElementById(`${incorrectAnswers}`);
+            const ticketNum = document.getElementById(`${incorrectAnswers}`);         
 
             // Сделать номер красным
             ticketNum.classList.add('answered');
