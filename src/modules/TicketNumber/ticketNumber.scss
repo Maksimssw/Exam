@@ -23,15 +23,9 @@
 .numbers__list.active{
     background: #85b73e;
     color: #fff;
-    &:hover, &:focus{
-        color: #85b73e;
-    }
 }
 
 .numbers__list.wrong{
     background: #db011c;
     color: #fff;
-    &:hover, &:focus{
-        color: #db011c;
-    }
 }

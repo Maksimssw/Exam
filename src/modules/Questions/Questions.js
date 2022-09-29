@@ -1,16 +1,26 @@
 import './questions.scss';
 import { useState, useRef } from 'react';
 import TicketNumber from '../TicketNumber/TicketNumber';
+import Results from '../Results/Results';
 
 const Questions = (props) =>{
 
     const {ticket} = props;
+
+    // Все номера отвечаенных на вопрос
+    const [allQuestionAnswered, setAllQuestionAnswered] = useState(0);
 
     // Номер правильного ответа
     const [rightAnswers, setRightAnswers] = useState();
 
     // Номера неправильных ответов
     const [incorrectAnswers, setIncorrectAnswers] = useState();
+
+    // Количество правильно отвеченных вопросов
+    const [right, setRight] = useState(0);
+
+    // Количество неправильно отвеченных вопросов
+    const [wrong, setWrong] = useState(0);
 
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
@@ -26,13 +36,15 @@ const Questions = (props) =>{
         if(answersWrapper.classList.contains('hidden')){
 
         }else{
+            answersWrapper.classList.add('hidden');
+
+            setAllQuestionAnswered(allQuestionAnswered + 1);
+
             if(boolean){
                 answer.classList.add('right');
-                answersWrapper.classList.add('hidden');
                 processingCorrectAnswer(answer);
             } else{
                 answer.classList.add('wrong');
-                answersWrapper.classList.add('hidden');
                 handlingIncorrectResponse(answer);
             } 
         }
@@ -57,6 +69,9 @@ const Questions = (props) =>{
         
         // Скролл к следующему вопросу
         numberProcessing(num + 1);
+
+        // Количество правильно отвеченных вопросов
+        setRight(right + 1);
     }
 
     // Обработка неправильного ответа
@@ -72,6 +87,12 @@ const Questions = (props) =>{
 
         // Удаление атрибута hidden для отображения правильного ответа и кнопки 
         mistake.removeAttribute('hidden');
+
+        // Скрол к кнопке "Следующий вопрос"
+        scrollNextQuestion();
+
+        // Количество неправильно отвеченных вопросов
+        setWrong(wrong + 1);
     }
 
     // Обработка кнопки "Следующий вопрос"
@@ -92,6 +113,14 @@ const Questions = (props) =>{
     const numberProcessing = (num) => {
         setTranslateX(num * width.current.offsetWidth - width.current.offsetWidth);
     }
+    
+    // Скрол к кнопке "Следующий вопрос"
+    const scrollNextQuestion = () =>{
+        console.log(button);
+        button.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    const button = useRef(null);
     
     const question = ticket.map((el, i) => {
         const {title, ticket_number, image, question, answers, correct_answer, answer_tip, topic} = el;
@@ -125,7 +154,8 @@ const Questions = (props) =>{
                     <p className='mistake__topic'>{topic}</p>
                     <button 
                         className='mistake__btn'
-                        onClick={(e) => nextQuestion(e)}>СЛЕДУЮЩИЙ ВОПРОС</button>
+                        onClick={(e) => nextQuestion(e)}
+                        ref={button}>СЛЕДУЮЩИЙ ВОПРОС</button>
                 </div>
             </li>
         )
@@ -143,6 +173,10 @@ const Questions = (props) =>{
                     transform: `translateX(-${translateX}px)`
                 }}>
                     {question}
+                    <Results 
+                        answered={allQuestionAnswered}
+                        right={right}
+                        wrong={wrong}/>
                 </ul>
             </div>
         </>

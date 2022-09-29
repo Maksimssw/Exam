@@ -1,0 +1,33 @@
+.results{
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    padding:120px 0 60px 0;
+    &__title{
+        text-align: center;
+    }
+    &__subtitle{
+        font-size: 18px;
+        text-align: center;
+        margin: 10px  0 20px 0;
+    }
+    &__btn{
+        background: blue;
+        display: flex;
+        color: #fff;
+        height: 40px;
+        width: 200px;
+        justify-content: center;
+        align-items: center;
+    }
+    &__more{
+        text-align: center;
+        color: blue;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
