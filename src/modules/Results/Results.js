@@ -4,7 +4,7 @@ import './results.scss';
 
 const Results = (props) => {
 
-    const {answered, right, wrong} = props;
+    const {answered, right, wrong, resetQuestions} = props;
     
     useEffect(() => {
         resultsQuestion();
@@ -27,12 +27,13 @@ const Results = (props) => {
         } 
     }
 
-    const wrongWrapper = failed === null ? 
+    const wrongWrapper = failed === true ? 
     <div>
         <h2 className="results__title"> Тренеруйтесь!</h2>
         <p className="results__subtitle">{wrong} ошибок</p>
         <Link className="results__btn" to='/mistakes'>МОИ ОШИБКИ</Link>
-        <div className="results__more">ПРОЙТИ ЕЩЕ РАЗ</div>
+        <div className="results__more"
+             onClick={(e) => resetQuestions(e)}>ПРОЙТИ ЕЩЕ РАЗ</div>
     </div> : null
 
     return(

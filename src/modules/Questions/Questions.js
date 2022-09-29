@@ -22,6 +22,9 @@ const Questions = (props) =>{
     // Количество неправильно отвеченных вопросов
     const [wrong, setWrong] = useState(0);
 
+    // Сброс номеров
+    const [resetNum, setResetNum] = useState(0);
+
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
         // Получение нажатого элемента
@@ -104,6 +107,9 @@ const Questions = (props) =>{
         
         // Скролл к следующему вопросу
         numberProcessing(num + 1);
+
+        // Скрытие кнопки
+        e.target.classList.add('hidden');
     }
 
     const [translateX, setTranslateX] = useState(0);
@@ -116,8 +122,51 @@ const Questions = (props) =>{
     
     // Скрол к кнопке "Следующий вопрос"
     const scrollNextQuestion = () =>{
-        console.log(button);
         button.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Пройти билет повтороно
+    // Сброс вопросов 
+    const resetQuestions = (e) => {
+        const questions = e.target.closest('.questions'),
+              question = questions.querySelectorAll('.question');
+
+        // Сброс стилей в каждом вопросе
+        question.forEach(el => {
+            // Удаление класса отвеченного на вопрос
+            const answers = el.querySelector('.answers');
+            answers.classList.remove('hidden');
+
+            // Добавление атрибута hidden, для скрытия правильного ответа
+            const mistake = el.querySelector('.mistake');
+            mistake.setAttribute('hidden', '');
+
+            // Удаление класса hidden, для отображение кнопки,
+            // при неправильном ответе
+            const mistakeBtn = el.querySelector('.mistake__btn');
+            mistakeBtn.classList.remove('hidden');
+
+            // Получение всех вариантов ответа на 1 вопрос
+            const answersList = el.querySelectorAll('.answers__list');
+
+            answersList.forEach(el => {
+
+                // Сброс классов
+                el.classList.remove('wrong');
+                el.classList.remove('right');
+            })
+        })
+
+        // Сброс номеров классов
+        setResetNum(resetNum + 1);
+
+        // Сброс хуков
+        setRight(0);
+        setWrong(0);
+        setAllQuestionAnswered(0);
+
+        // Скролл к первому вопросу
+        numberProcessing(1);
     }
 
     const button = useRef(null);
@@ -167,7 +216,8 @@ const Questions = (props) =>{
                 ticket={ticket} 
                 numberProcessing={numberProcessing}
                 rightAnswers={rightAnswers}
-                incorrectAnswers={incorrectAnswers}/>
+                incorrectAnswers={incorrectAnswers}
+                resetNum={resetNum}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`
@@ -176,7 +226,8 @@ const Questions = (props) =>{
                     <Results 
                         answered={allQuestionAnswered}
                         right={right}
-                        wrong={wrong}/>
+                        wrong={wrong}
+                        resetQuestions={resetQuestions}/>
                 </ul>
             </div>
         </>

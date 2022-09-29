@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const TicketNumber = (props) =>{
 
     // Номера всех вопросов
-    const {ticket, numberProcessing, rightAnswers, incorrectAnswers} = props
+    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -21,6 +21,23 @@ const TicketNumber = (props) =>{
     useEffect(() => {
         questionNumberWrong()
     }, [incorrectAnswers])
+
+    useEffect(() => {
+        resetNumber(resetNum);
+    }, [resetNum])
+
+    // Сброс номеров    
+    const resetNumber = (el) => {
+        if(el){
+            const wrapper = document.querySelector('.numbers');
+            const numList = wrapper.querySelectorAll('.numbers__list');
+            numList.forEach(el => {
+                el.classList.remove('answered');
+                el.classList.remove('wrong');
+                el.classList.remove('active');
+            })
+        }
+    }
 
     // Добавление стилей для правильного ответа
     const questionNumberCorrectly = () => {
