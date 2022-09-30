@@ -1,5 +1,6 @@
 import './tickets.scss'
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 
 const Tickets = (props) => {
 
@@ -12,11 +13,38 @@ const Tickets = (props) => {
         
         // Создание карточки билета
         return(
-            <Link key={num} to={`/tickets/${num}`} className='tickets__list'>
+            <Link key={num} to={`/tickets/${num}`} id={`ticket-${num}`} className='tickets__list'>
                 <h2 className='tickets__number'>{el}</h2>
             </Link>
         )
     })
+
+    // Список решенных билетов
+    const [solvedTickets, setSolvedTickets] = useState(
+        localStorage.getItem('solvedTickets')
+    )
+
+    useEffect(() => {
+     changingTicketStyle(solvedTickets)
+    }, [solvedTickets, ticketsList])
+
+    // Иземенение стилей решенных билетов
+    const changingTicketStyle = (ticket) => {
+        if(ticketsList.length === 40 && solvedTickets){
+            const arr = ticket.split('-');
+        
+            // Удаление повторяющих номеров билетов и пробелов
+            const arrFil =  arr.filter((item, index) => {
+                return arr.indexOf(item) === index
+            }).filter(item => item !== '');
+
+            arrFil.forEach(el => {
+                const ticketList = document.getElementById(`ticket-${el}`);
+
+                ticketList.classList.add('decided');
+            })
+        }
+    }
 
     return(
         <>

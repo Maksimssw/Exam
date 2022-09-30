@@ -13,7 +13,7 @@ const Questions = (props) =>{
     // Номер правильного ответа
     const [rightAnswers, setRightAnswers] = useState();
 
-    // Номера неправильных ответов
+    // Номера неправильного ответов
     const [incorrectAnswers, setIncorrectAnswers] = useState();
 
     // Количество правильно отвеченных вопросов
@@ -24,6 +24,11 @@ const Questions = (props) =>{
 
     // Сброс номеров
     const [resetNum, setResetNum] = useState(0);
+
+    // Номер билета 
+    const [ticketNumber, setTicketNumber] = useState(
+        +ticket[0].ticket_number.replace(/\D/g, '')
+    )
 
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
@@ -227,7 +232,8 @@ const Questions = (props) =>{
                         answered={allQuestionAnswered}
                         right={right}
                         wrong={wrong}
-                        resetQuestions={resetQuestions}/>
+                        resetQuestions={resetQuestions}
+                        ticket={ticketNumber}/>
                 </ul>
             </div>
         </>
