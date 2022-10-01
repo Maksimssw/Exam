@@ -1,6 +1,5 @@
 import './ticket.scss';
 import Loading from '../Loading/Loading';
-import { useState, useRef } from 'react';
 import Questions from '../Questions/Questions';
 
 const Ticket = (props) => {

@@ -2,6 +2,7 @@ import './tickets.scss'
 import '../Style/modal.scss';
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import useModal from '../../hooks/useModal';
 
 const Tickets = (props) => {
 
@@ -38,7 +39,7 @@ const Tickets = (props) => {
     const passTicketAgain = (e) => {
         if(e.target.classList.contains('decided')){
             e.preventDefault();
-            setTicket(e.target.innerText);
+            setTicket(e.target.innerText.replace(/Билет /g, ''));
             setSwitchTic(!switchTic);
         }
     }
@@ -98,30 +99,21 @@ const Tickets = (props) => {
 
 // Модальное окно пройденых билетов
 const RepeatTicket = (props) => {
+
     const {ticket, switchTic} = props;
 
-    // Состояние модального окна
-    const [modal, setModal] = useState('hidden');
-
-    // Скрытие модального окна 
-    const closingModalWindow = () => setModal('hidden');
-
-    // Открытие модального окна
-    useEffect(() => {
-        if(ticket){
-            setModal('active'); 
-        }
-    }, [switchTic])
+    const {closingModalWindow, modal, deletingResolvedTicket} = useModal(ticket, switchTic)
 
     return(
         <div className={`modal ${modal}`}>
             <div className='modal__wrapper modal__wrapper_repeat'>
                 <div className='modal__close' onClick={closingModalWindow}></div>
-                <h2 className='modal__title'>{ticket} уже пройден</h2>
+                <h2 className='modal__title'>Билет {ticket} уже пройден</h2>
                 <div className='modal__btns'>
                     <Link 
-                        to='/' 
-                        className='modal__btn modal__btn_again' > Пройти заново
+                        to={`/tickets/${ticket}`} 
+                        className='modal__btn modal__btn_again'
+                        onClick={deletingResolvedTicket}> Пройти заново
                     </Link>
                     <button className='modal__btn modal__btn_cancellation'  
                             onClick={closingModalWindow}>
