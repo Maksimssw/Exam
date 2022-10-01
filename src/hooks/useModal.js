@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const useModal = (ticket, switchTic) => {
+const useModal = ({ticket, switchTic}) => {
 
     // Состояние модального окна
     const [modal, setModal] = useState('closed');
@@ -11,12 +10,22 @@ const useModal = (ticket, switchTic) => {
 
     // Открытие модального окна
     useEffect(() => {
-        if(ticket){
+        if(ticket || switchTic){
             setModal('active'); 
         }
     }, [switchTic])
+    
+    // Удаление решенного ответа
+    const deletingResolvedTicket = () => {
+        const local = localStorage.getItem('solvedTickets')
+            .split('-')
+            .filter(el => el !== ticket)
+            .join('-');
+        localStorage.removeItem('solvedTickets');
+        localStorage.setItem('solvedTickets', local);
+    } 
 
-    return {closingModalWindow, modal}
+    return {closingModalWindow, modal, deletingResolvedTicket}
 }
 
 export default useModal;

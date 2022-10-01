@@ -24,5 +24,4 @@ const Ticket = (props) => {
     )
 }
 
-
 export default Ticket;

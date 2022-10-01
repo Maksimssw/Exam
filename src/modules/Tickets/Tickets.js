@@ -35,22 +35,32 @@ const Tickets = (props) => {
         localStorage.getItem('solvedTickets')
     )
 
-    // Пройти билет повторно 
-    const passTicketAgain = (e) => {
-        if(e.target.classList.contains('decided')){
-            e.preventDefault();
-            setTicket(e.target.innerText.replace(/Билет /g, ''));
-            setSwitchTic(!switchTic);
-        }
-    }
-
     useEffect(() => {
-     changingTicketStyle(solvedTickets)
+        changingTicketStyle(solvedTickets)
     }, [solvedTickets, ticketsList])
 
     // Иземенение стилей решенных билетов
     const changingTicketStyle = (ticket) => {
-        if(ticketsList.length === 40 && solvedTickets){
+        changingStyle(ticket, 'decided');
+    }
+
+    // Список несданных билетов 
+    const [unresolvedTickets, setUnresolvedTickets] = useState(
+        localStorage.getItem('unresolvedTickets')
+    )
+
+    useEffect(() => {
+        outstandingTicket(unresolvedTickets)
+    }, [unresolvedTickets, ticketsList])
+
+    // Иземенение стилей решенных билетов
+    const outstandingTicket = (ticket) => {
+        changingStyle(ticket, 'incorrect');
+    }
+
+    // Изменение стилей
+    const changingStyle = (ticket, style) => {
+        if(ticketsList.length === 40 && ticket){
             const arr = ticket.split('-');
         
             // Удаление повторяющих номеров билетов и пробелов
@@ -61,8 +71,17 @@ const Tickets = (props) => {
             arrFil.forEach(el => {
                 const ticketList = document.getElementById(`ticket-${el}`);
 
-                ticketList.classList.add('decided');
+                ticketList.classList.add(style);
             })
+        }
+    }
+
+    // Пройти билет повторно 
+    const passTicketAgain = (e) => {
+        if(e.target.classList.contains('decided')){
+            e.preventDefault();
+            setTicket(e.target.innerText.replace(/Билет /g, ''));
+            setSwitchTic(!switchTic);
         }
     }
 
@@ -102,7 +121,10 @@ const RepeatTicket = (props) => {
 
     const {ticket, switchTic} = props;
 
-    const {closingModalWindow, modal, deletingResolvedTicket} = useModal(ticket, switchTic)
+    const {closingModalWindow, modal, deletingResolvedTicket} = useModal({
+        ticket: ticket,
+        switchTic: switchTic
+    })
 
     return(
         <div className={`modal ${modal}`}>

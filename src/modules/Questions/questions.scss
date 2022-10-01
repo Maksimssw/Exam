@@ -23,7 +23,14 @@
         color: #000;
     }
     &_ticket{
-        border: none;
+        cursor: pointer;
+        border-bottom: none;
+        font-size: 20px;
+        transition: 0.3s all;
+        &:hover, &:focus{
+            outline: none;
+            transform: translateX(-10px);
+        }
     }
 }
 

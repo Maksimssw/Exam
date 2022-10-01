@@ -2,7 +2,6 @@ import './questions.scss';
 import { useState, useRef } from 'react';
 import TicketNumber from '../TicketNumber/TicketNumber';
 import Results from '../Results/Results';
-import { Link } from 'react-router-dom';
 
 const Questions = (props) =>{
 

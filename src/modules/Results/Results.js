@@ -22,20 +22,43 @@ const Results = (props) => {
             // Билет не сдан , если будет больше 2-ух ошибок
             if(wrong > 2){
                 setFailded(true);
+                
+                // Сохранение несданных билетов
+                savingData('unresolvedTickets');
             } 
             // Билет сдан без ошибок
             else if(right === 20){
                 setPassed(true);
 
                 // Сохранение сданных билетов
-                const local = localStorage.getItem('solvedTickets');
-                localStorage.removeItem('solvedTickets');
-                
-                const res = `${local + ticket}-`;
-                
-                localStorage.setItem(`solvedTickets`, res);
+                savingData('solvedTickets')
+
+                // Удаление с базы данных нерешенного билета
+                // В случае если билет решили правильно
+                deletionFromDatabase();
             }
         } 
+    }
+
+    // Удаление с базы данных нерешенного билета
+    const deletionFromDatabase = () => {
+        const local = localStorage.getItem('unresolvedTickets')
+            .split('-')
+            .filter(el => +el !== ticket)
+            .join('-');
+    
+        localStorage.removeItem('unresolvedTickets');
+        localStorage.setItem('unresolvedTickets', local);
+    }
+
+    // Сохранение данных через LocalStorage
+    const savingData = (name) => {
+        const local = localStorage.getItem(name);
+        localStorage.removeItem(name);
+        
+        const res = `${local + ticket}-`;
+        
+        localStorage.setItem(name, res);
     }
 
     // Вёрстка не сданного билета

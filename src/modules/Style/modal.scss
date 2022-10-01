@@ -4,6 +4,7 @@
     width: 100%;
     height: 100%;
     top: 0;
+    z-index: 10;
     left: 0;
     position: fixed;
     background:rgba(8, 6, 6, 0.5);
@@ -30,6 +31,7 @@
         &_again{
             color: #fff;
             background: #1b75cd;
+            cursor: pointer;
         }
         &_cancellation{
             background: #db0117;
