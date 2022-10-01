@@ -6,6 +6,7 @@ const Header = () => {
         <>
             <header className="header">
                 <div className="container">
+                    <h1 className='header__title'>Билеты АВ 2021 года</h1>
                     <div className="header__wrapper">
                         <div className="header__list">
                             <p className='header__text'>0 / 800</p>

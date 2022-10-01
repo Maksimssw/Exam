@@ -1,10 +1,15 @@
 import './tickets.scss'
+import '../Style/modal.scss';
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 
 const Tickets = (props) => {
 
     const {tickets} = props;
+
+    // Номер билета
+    const [ticket, setTicket] = useState();
+    const [switchTic, setSwitchTic] = useState();
 
     const ticketsList = tickets.map(el => {
 
@@ -13,8 +18,13 @@ const Tickets = (props) => {
         
         // Создание карточки билета
         return(
-            <Link key={num} to={`/tickets/${num}`} id={`ticket-${num}`} className='tickets__list'>
-                <h2 className='tickets__number'>{el}</h2>
+            <Link 
+                key={num} 
+                to={`/tickets/${num}`} 
+                id={`ticket-${num}`} 
+                className='tickets__list'
+                onClick={(e) => passTicketAgain(e)}>
+                {el}
             </Link>
         )
     })
@@ -23,6 +33,15 @@ const Tickets = (props) => {
     const [solvedTickets, setSolvedTickets] = useState(
         localStorage.getItem('solvedTickets')
     )
+
+    // Пройти билет повторно 
+    const passTicketAgain = (e) => {
+        if(e.target.classList.contains('decided')){
+            e.preventDefault();
+            setTicket(e.target.innerText);
+            setSwitchTic(!switchTic);
+        }
+    }
 
     useEffect(() => {
      changingTicketStyle(solvedTickets)
@@ -68,9 +87,49 @@ const Tickets = (props) => {
                     <div className='tickets__wrapper'>
                         {ticketsList}
                     </div>
+                    <RepeatTicket
+                        ticket={ticket}
+                        switchTic={switchTic}/>
                 </div>
             </div>
         </>
+    )
+}
+
+// Модальное окно пройденых билетов
+const RepeatTicket = (props) => {
+    const {ticket, switchTic} = props;
+
+    // Состояние модального окна
+    const [modal, setModal] = useState('hidden');
+
+    // Скрытие модального окна 
+    const closingModalWindow = () => setModal('hidden');
+
+    // Открытие модального окна
+    useEffect(() => {
+        if(ticket){
+            setModal('active'); 
+        }
+    }, [switchTic])
+
+    return(
+        <div className={`modal ${modal}`}>
+            <div className='modal__wrapper modal__wrapper_repeat'>
+                <div className='modal__close' onClick={closingModalWindow}></div>
+                <h2 className='modal__title'>{ticket} уже пройден</h2>
+                <div className='modal__btns'>
+                    <Link 
+                        to='/' 
+                        className='modal__btn modal__btn_again' > Пройти заново
+                    </Link>
+                    <button className='modal__btn modal__btn_cancellation'  
+                            onClick={closingModalWindow}>
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        </div>
     )
 }
 
