@@ -4,7 +4,7 @@ import './results.scss';
 
 const Results = (props) => {
 
-    const {answered, right, wrong, resetQuestions, ticket} = props;
+    const {answered, right, wrong, resetQuestions, ticket, savingResponses} = props;
 
     useEffect(() => {
         resultsQuestion();
@@ -19,6 +19,10 @@ const Results = (props) => {
     // Результаты отвеченных вопросов
     const resultsQuestion = () => {
         if(answered === 20){
+            
+            // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
+            savingResponses();
+
             // Билет не сдан , если будет больше 2-ух ошибок
             if(wrong > 2){
                 setFailded(true);

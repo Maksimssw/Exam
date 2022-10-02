@@ -6,7 +6,7 @@ import useModal from '../../hooks/useModal';
 
 const TicketNumber = (props) =>{
     // Номера всех вопросов
-    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum} = props
+    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum, save} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -57,9 +57,12 @@ const TicketNumber = (props) =>{
     }
 
     // Открытие модального окна о закрытие страницы
-    const openModal = () =>  {
-        setSwitchTic(!switchTic);
-        setModal(true);
+    const openModal = (e) =>  {
+        if(e.target.classList.contains('save')){}else{
+            e.preventDefault();
+            setSwitchTic(!switchTic);
+            setModal(true);
+        }
     }
 
     const numbers = ticket === undefined ? null : ticket.map(el => {
@@ -78,7 +81,12 @@ const TicketNumber = (props) =>{
     return(
         <>
             <div className='back back_ticket'>
-                <div onClick={openModal}>← Вернутся ко всем билетам</div>
+                <Link 
+                    to='/tickets'
+                    onClick={(e) => openModal(e)} 
+                    className={save}>
+                        ← Вернутся ко всем билетам
+                </Link>
             </div>
             <ul className='numbers'>
                 {numbers}

@@ -30,6 +30,9 @@ const Questions = (props) =>{
         +ticket[0].ticket_number.replace(/\D/g, '')
     )
 
+    // Сохранение
+    const [saving, setSaving] = useState('');
+
     // Ответ пользователся
     const setAnswerUser = (e, boolean) =>{
         // Получение нажатого элемента
@@ -174,6 +177,9 @@ const Questions = (props) =>{
         numberProcessing(1);
     }
 
+    // Сохранение ответов при нажатий на "Вернутся ко всем билетам"
+    const savingResponses = () => setSaving('save')
+
     const button = useRef(null);
     
     const question = ticket.map((el, i) => {
@@ -222,7 +228,8 @@ const Questions = (props) =>{
                 numberProcessing={numberProcessing}
                 rightAnswers={rightAnswers}
                 incorrectAnswers={incorrectAnswers}
-                resetNum={resetNum}/>
+                resetNum={resetNum}
+                save={saving}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`
@@ -233,7 +240,8 @@ const Questions = (props) =>{
                         right={right}
                         wrong={wrong}
                         resetQuestions={resetQuestions}
-                        ticket={ticketNumber}/>
+                        ticket={ticketNumber}
+                        savingResponses={savingResponses}/>
                 </ul>
             </div>
         </>

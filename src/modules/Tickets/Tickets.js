@@ -3,10 +3,14 @@ import '../Style/modal.scss';
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import useModal from '../../hooks/useModal';
+import useCalculator from '../../hooks/useCalculator';
 
 const Tickets = (props) => {
 
     const {tickets} = props;
+
+    // Получение процентов сданных билетов
+    const {coutingSolvedTickets} = useCalculator();
 
     // Номер билета
     const [ticket, setTicket] = useState();
@@ -100,7 +104,7 @@ const Tickets = (props) => {
                     <h2 className='tickets__title'>Прогресс</h2>
                     <div className='tickets__progress'>
                         <div className='tickets__active' style={{
-                            width: '0%'
+                            width: `${coutingSolvedTickets('percent')}%`
                         }}>
                         </div>
                     </div>

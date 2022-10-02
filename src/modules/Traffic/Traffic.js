@@ -1,7 +1,7 @@
 import './traffic.scss';
 import './reset.scss'
 import { Link } from 'react-router-dom'
-import Header from '../Header/header';
+import Header from '../Header/Header';
 import exclamationMark from '../icons/exclamation-mark.png';
 import book from '../icons/book.png';
 
