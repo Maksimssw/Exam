@@ -2,6 +2,7 @@ import './questions.scss';
 import { useState, useRef } from 'react';
 import TicketNumber from '../TicketNumber/TicketNumber';
 import Results from '../Results/Results';
+import Additional from '../Additional/Additional';
 
 const Questions = (props) =>{
 
@@ -29,6 +30,9 @@ const Questions = (props) =>{
     const [ticketNumber, setTicketNumber] = useState(
         +ticket[0].ticket_number.replace(/\D/g, '')
     )
+
+    // Активация дополнительных вопросов
+    const [activeAdditional, setActiveAdditional] = useState(false);
 
     // Сохранение
     const [saving, setSaving] = useState('');
@@ -177,6 +181,11 @@ const Questions = (props) =>{
         numberProcessing(1);
     }
 
+    // Активация дополнительных вопросов
+    const additionalQuestion = () => {
+        setActiveAdditional(true);
+    };
+
     // Сохранение ответов при нажатий на "Вернутся ко всем билетам"
     const savingResponses = () => setSaving('save')
 
@@ -235,13 +244,17 @@ const Questions = (props) =>{
                     transform: `translateX(-${translateX}px)`
                 }}>
                     {question}
+                    <Additional
+                        wrong={wrong}
+                        activeAdditional={activeAdditional}/>
                     <Results 
                         answered={allQuestionAnswered}
                         right={right}
                         wrong={wrong}
                         resetQuestions={resetQuestions}
                         ticket={ticketNumber}
-                        savingResponses={savingResponses}/>
+                        savingResponses={savingResponses}
+                        additionalQuestion={additionalQuestion}/>
                 </ul>
             </div>
         </>

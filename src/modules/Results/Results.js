@@ -4,7 +4,13 @@ import './results.scss';
 
 const Results = (props) => {
 
-    const {answered, right, wrong, resetQuestions, ticket, savingResponses} = props;
+    const {answered, 
+           right, 
+           wrong, 
+           resetQuestions, 
+           ticket, 
+           savingResponses,
+           additionalQuestion} = props;
 
     useEffect(() => {
         resultsQuestion();
@@ -18,8 +24,10 @@ const Results = (props) => {
 
     // Результаты отвеченных вопросов
     const resultsQuestion = () => {
-        if(answered === 20){
-            
+        const questions = document.querySelectorAll('.question');
+        if(answered === questions.length){
+        
+
             // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
             savingResponses();
 
@@ -30,8 +38,13 @@ const Results = (props) => {
                 // Сохранение несданных билетов
                 savingData('unresolvedTickets');
             } 
+            // Дополнительные вопросы 
+            else{
+                additionalQuestion();
+            }
+            
             // Билет сдан без ошибок
-            else if(right === 20){
+            if(right === 20){
                 setPassed(true);
 
                 // Сохранение сданных билетов
