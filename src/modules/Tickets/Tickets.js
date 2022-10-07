@@ -67,6 +67,8 @@ const Tickets = (props) => {
         if(ticketsList.length === 40 && ticket){
             const arr = ticket.split('-');
         
+            console.log(arr);
+
             // Удаление повторяющих номеров билетов и пробелов
             const arrFil =  arr.filter((item, index) => {
                 return arr.indexOf(item) === index

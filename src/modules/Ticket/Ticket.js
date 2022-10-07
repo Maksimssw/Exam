@@ -10,7 +10,7 @@ const Ticket = (props) => {
     const loading = ticket === undefined ? <Loading/> : null;
 
     // Компонент всех вопросов одного билета
-    const questions = ticket === undefined ? null : <Questions ticket={ticket}/>
+    const questions = ticket === undefined ? null : <Questions wholTicket={ticket}/>
 
     return(
         <div className='ticket'>

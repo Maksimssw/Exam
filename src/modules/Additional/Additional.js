@@ -12,9 +12,10 @@ import { useEffect, useState } from 'react';
 // Дополнительные вопросы
 const Additional = (props) => {
 
-    const {activeAdditional, wrong} = props;
+    const {activeAdditional, wrong, addingAdditionalQuestion} = props;
 
-    const [questions, setQuestions] = useState(false);
+    // Дополнительные вопросы
+    const [additional, setAdditional] = useState(null);
 
     useEffect(() => {
         if(wrong > 3 || !activeAdditional){}else{
@@ -24,23 +25,22 @@ const Additional = (props) => {
 
     const createQuestion = (wrong) => {
         if(wrong === 1){
-            // Получение темы на которой совершена ошибка
-            const answer = document.querySelector('.answers .wrong'),
-                  question = answer.closest('.question'),
-                  topic = question.querySelector('.mistake__topic').innerText;
-            
+            //Рандомный билет
             const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
+
+            // Первый тематический блок
             if(wrong < 6){
                 const data = questions.filter(el => {
                     return el.ticket_number === `Билет ${randomNumTicket}`;
-                });
-
-                console.log(data);
+                }).filter(el => {
+                    return el.title.replace(/\D/g, '') < 6;
+                }).map(el => {
+                    return {...el, title: `Вопрос ${+el.title.replace(/\D/g, '') + 20}`}
+                })
+                addingAdditionalQuestion(data);
             }
         }
     }
-
-    return
 }
 
 export default Additional;

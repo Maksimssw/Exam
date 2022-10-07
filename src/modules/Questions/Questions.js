@@ -3,10 +3,24 @@ import { useState, useRef } from 'react';
 import TicketNumber from '../TicketNumber/TicketNumber';
 import Results from '../Results/Results';
 import Additional from '../Additional/Additional';
+import useSlider from '../../hooks/useSlider';
 
 const Questions = (props) =>{
 
-    const {ticket} = props;
+    const {wholTicket} = props;
+
+     // Целый билет
+
+     const width = useRef();
+    
+
+    const [ticket, setTicket] = useState(wholTicket)
+
+
+    const {widthTranslate, numberProcessing, translateX} = useSlider(
+        width,
+        ticket.length
+    );
 
     // Все номера отвечаенных на вопрос
     const [allQuestionAnswered, setAllQuestionAnswered] = useState(0);
@@ -124,14 +138,6 @@ const Questions = (props) =>{
         e.target.classList.add('hidden');
     }
 
-    const [translateX, setTranslateX] = useState(0);
-    const width = useRef();
-
-    // Скролл к следующему вопросу
-    const numberProcessing = (num) => {
-        setTranslateX(num * width.current.offsetWidth - width.current.offsetWidth);
-    }
-    
     // Скрол к кнопке "Следующий вопрос"
     const scrollNextQuestion = () =>{
         button.current.scrollIntoView({ behavior: "smooth" });
@@ -179,6 +185,15 @@ const Questions = (props) =>{
 
         // Скролл к первому вопросу
         numberProcessing(1);
+    }
+
+    // Добавление дополнительных вопросов в билет
+    const addingAdditionalQuestion = (data) => {
+        if(data !== null) {
+            setTicket(ticket.concat(data));
+            console.log(data);
+            console.log(ticket);
+        };
     }
 
     // Активация дополнительных вопросов
@@ -241,12 +256,14 @@ const Questions = (props) =>{
                 save={saving}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
-                    transform: `translateX(-${translateX}px)`
+                    transform: `translateX(-${translateX}px)`,
+                    width: `${widthTranslate}%`
                 }}>
                     {question}
                     <Additional
                         wrong={wrong}
-                        activeAdditional={activeAdditional}/>
+                        activeAdditional={activeAdditional}
+                        addingAdditionalQuestion={addingAdditionalQuestion}/>
                     <Results 
                         answered={allQuestionAnswered}
                         right={right}

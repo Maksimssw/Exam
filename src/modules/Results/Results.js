@@ -22,6 +22,9 @@ const Results = (props) => {
     // В случае если билет пройдет , passed будет true
     const [passed, setPassed] = useState(null);
 
+    // В случае если будут дополнительные вопросы , additionally будет true
+    const [additionally, setAdditionally] = useState(null);
+
     // Результаты отвеченных вопросов
     const resultsQuestion = () => {
         const questions = document.querySelectorAll('.question');
@@ -40,7 +43,9 @@ const Results = (props) => {
             } 
             // Дополнительные вопросы 
             else{
+                console.log(wrong);
                 additionalQuestion();
+                setPassed(true);
             }
             
             // Билет сдан без ошибок
@@ -92,7 +97,7 @@ const Results = (props) => {
     const passedWrapper = passed === true ?
     <div>
         <h2 className="results__title">Поздравляем!</h2>
-        <p className="results__subtitle">0 ошибок</p>
+        <p className="results__subtitle">{wrong} ошибок</p>
         <Link 
             className="results__btn" 
             to={`/tickets`}>

@@ -65,7 +65,7 @@ const TicketNumber = (props) =>{
         }
     }
 
-    const numbers = ticket === undefined ? null : ticket.map(el => {
+    const numbers = ticket === undefined ? null : ticket.map((el, i) => {
 
         // Получение номера вопроса
         const num = el.title.replace(/\D/g, '');
