@@ -36,21 +36,21 @@ const Results = (props) => {
 
             // Билет не сдан , если будет больше 2-ух ошибок
             if(wrong > 2){
+                setPassed(false);
                 setFailded(true);
                 
                 // Сохранение несданных билетов
                 savingData('unresolvedTickets');
             } 
             // Дополнительные вопросы 
-            else{
-                console.log(wrong);
+            else if (wrong < 2){
                 additionalQuestion();
-                setPassed(true);
             }
             
             // Билет сдан без ошибок
             if(right === 20){
                 setPassed(true);
+                setFailded(false);
 
                 // Сохранение сданных билетов
                 savingData('solvedTickets')

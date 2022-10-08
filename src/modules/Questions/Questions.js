@@ -175,6 +175,12 @@ const Questions = (props) =>{
             })
         })
 
+        // Сброс дополнительных вопросов
+        const arr = ticket.filter((el, i) => {
+            return +el.title.replace(/\D/g, '') <= 20
+        });
+        setTicket(arr);
+
         // Сброс номеров классов
         setResetNum(resetNum + 1);
 
@@ -191,8 +197,6 @@ const Questions = (props) =>{
     const addingAdditionalQuestion = (data) => {
         if(data !== null) {
             setTicket(ticket.concat(data));
-            console.log(data);
-            console.log(ticket);
         };
     }
 

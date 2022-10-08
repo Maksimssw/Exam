@@ -23,22 +23,46 @@ const Additional = (props) => {
         }
     }, [activeAdditional])
 
+
+    // Создание тем
+    const createThemes = (randomNumTicket, num) => {
+        return questions.filter(el => {
+            return el.ticket_number === `Билет ${randomNumTicket}`;
+        }).map(el => {
+            return {...el, title: `Вопрос ${element(el) + 20}`}
+        })
+    }
+
+    // Сокращение 
+    const element = (el) => {
+        return +el.title.replace(/\D/g, '');
+    }
+
     const createQuestion = (wrong) => {
         if(wrong === 1){
+            let data;
+
+            // Получение номера ошибки
+            const numError = +document.querySelector('numbers__list wrong')
+
             //Рандомный билет
             const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
 
+            console.log(numError);
+
             // Первый тематический блок
-            if(wrong < 6){
-                const data = questions.filter(el => {
-                    return el.ticket_number === `Билет ${randomNumTicket}`;
-                }).filter(el => {
-                    return el.title.replace(/\D/g, '') < 6;
-                }).map(el => {
-                    return {...el, title: `Вопрос ${+el.title.replace(/\D/g, '') + 20}`}
+            if(5 < 6){
+                data = createThemes(randomNumTicket).filter(el => {
+                    return element(el) - 20 < 6
                 })
-                addingAdditionalQuestion(data);
             }
+            // Второй тематический блок 
+            else if(numError >= 6 && numError <= 10){
+                data = createThemes(randomNumTicket).filter(el => {
+                    return element(el) >= 6 && element(el) <= 10;
+                })
+            }
+            addingAdditionalQuestion(data);
         }
     }
 }
