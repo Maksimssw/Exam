@@ -2,7 +2,7 @@ import './ticketNumber.scss';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import useModal from '../../hooks/useModal';
+import useModal from '../../../hooks/useModal';
 
 const TicketNumber = (props) =>{
     // Номера всех вопросов

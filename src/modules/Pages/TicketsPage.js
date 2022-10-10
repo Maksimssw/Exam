@@ -1,5 +1,5 @@
-import Tickets from "../Tickets/Tickets";
-import questions from '../../questions.json';
+import Tickets from "../TicketSection/Tickets/Tickets";
+import questions from '../../questions.json'
 import { useEffect, useState } from "react";
 
 const TicketsPage = () => {

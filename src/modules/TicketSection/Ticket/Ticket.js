@@ -1,5 +1,5 @@
 import './ticket.scss';
-import Loading from '../Loading/Loading';
+import Loading from '../../Loading/Loading';
 import Questions from '../Questions/Questions';
 
 const Ticket = (props) => {

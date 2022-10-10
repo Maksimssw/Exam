@@ -1,9 +1,9 @@
 import './tickets.scss'
-import '../Style/modal.scss';
+import '../../Style/modal.scss';
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import useModal from '../../hooks/useModal';
-import useCalculator from '../../hooks/useCalculator';
+import useModal from '../../../hooks/useModal';
+import useCalculator from '../../../hooks/useCalculator';
 
 const Tickets = (props) => {
 

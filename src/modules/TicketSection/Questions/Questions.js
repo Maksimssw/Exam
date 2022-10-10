@@ -245,7 +245,7 @@ const Questions = (props) =>{
                     <p className='question__title'>{title}</p>
                 </div>
                 <div className='question__photo'>
-                    <img src={require(`../../images/${img}`)} alt="photo"/>
+                    <img src={require(`../../../images/${img}`)} alt="photo"/>
                 </div>
                 <h2 className='question__title'>{question}</h2>
                 <ul className='answers'>

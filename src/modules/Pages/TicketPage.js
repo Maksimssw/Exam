@@ -1,4 +1,4 @@
-import Ticket from "../Ticket/Ticket";
+import Ticket from "../TicketSection/Ticket/Ticket";
 import { useParams } from 'react-router';
 import questions from '../../questions.json';
 import { useEffect, useState } from "react";
