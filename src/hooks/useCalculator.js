@@ -5,6 +5,9 @@ const useCalculator = () => {
         return localStorage.getItem(data) ? 
             localStorage.getItem(data)
                 .split('-')
+                .filter(function(item, pos) {
+                    return localStorage.getItem(data).indexOf(item) == pos;
+                })
                 .filter(el => el !== '') : 0;
     }
     

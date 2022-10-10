@@ -146,8 +146,13 @@ const Questions = (props) =>{
     // Пройти билет повтороно
     // Сброс вопросов 
     const resetQuestions = (e) => {
+
+        console.log(e.target);
+
         const questions = e.target.closest('.questions'),
               question = questions.querySelectorAll('.question');
+
+        const  ticketNum = document.querySelector('.question__ticket').innerText.replace(/\D/g, '');
 
         // Сброс стилей в каждом вопросе
         question.forEach(el => {
@@ -191,6 +196,16 @@ const Questions = (props) =>{
 
         // Скролл к первому вопросу
         numberProcessing(1);
+
+        // При нажатий на кнопку 'Вернутся ко всем билетам', билет не сохранится
+        setSaving('');
+
+        // Удаление с базы данных неверных ответов
+        const local = localStorage.getItem('unresolvedTickets').split('-').filter(el => {
+            return el !== ticketNum
+        }).join('-');
+        localStorage.removeItem('unresolvedTickets');
+        localStorage.setItem('unresolvedTickets', local);
     }
 
     // Добавление дополнительных вопросов в билет

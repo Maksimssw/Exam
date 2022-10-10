@@ -59,18 +59,29 @@ const Results = (props) => {
                 // В случае если билет решили правильно
                 deletionFromDatabase();
             }
+
+            // Ошибка Дополнительных вопросов
+            if(answered > 20 && wrong > 1){
+                setPassed(false);
+                setFailded(true);
+                
+                // Сохранение несданных билетов
+                savingData('unresolvedTickets');
+            }
         } 
     }
 
     // Удаление с базы данных нерешенного билета
     const deletionFromDatabase = () => {
-        const local = localStorage.getItem('unresolvedTickets')
+        try{
+            const local = localStorage.getItem('unresolvedTickets')
             .split('-')
             .filter(el => +el !== ticket)
             .join('-');
     
         localStorage.removeItem('unresolvedTickets');
         localStorage.setItem('unresolvedTickets', local);
+        } catch{}
     }
 
     // Сохранение данных через LocalStorage
