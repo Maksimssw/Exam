@@ -29,47 +29,62 @@ const Results = (props) => {
     const resultsQuestion = () => {
         const questions = document.querySelectorAll('.question');
         if(answered === questions.length){
-        
-
-            // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
-            savingResponses();
-
             // Билет не сдан , если будет больше 2-ух ошибок
+            console.log(wrong);
             if(wrong > 2){
-                setPassed(false);
-                setFailded(true);
-                
-                // Сохранение несданных билетов
-                savingData('unresolvedTickets');
+                ticketFalse();
             } 
             // Дополнительные вопросы 
             else if (wrong < 2){
                 additionalQuestion();
+                console.log(1);
             }
             
             // Билет сдан без ошибок
             if(right === 20){
-                setPassed(true);
-                setFailded(false);
-
-                // Сохранение сданных билетов
-                savingData('solvedTickets')
-
-                // Удаление с базы данных нерешенного билета
-                // В случае если билет решили правильно
-                deletionFromDatabase();
+                ticketTrue();
+                console.log(3);
             }
 
             // Ошибка Дополнительных вопросов
             if(answered > 20 && wrong > 1){
-                setPassed(false);
-                setFailded(true);
-                
-                // Сохранение несданных билетов
-                savingData('unresolvedTickets');
+                ticketFalse();
+                console.log(3);
+            } else if(answered > 20){
+                ticketTrue();
+                console.log(3);
             }
         } 
     }
+
+    // Билет сдан
+    const ticketTrue = () => {
+        setPassed(true);
+        setFailded(false);
+
+        // Сохранение сданных билетов
+        savingData('solvedTickets')
+
+        // Удаление с базы данных нерешенного билета
+        // В случае если билет решили правильно
+        deletionFromDatabase();
+
+        // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
+        savingResponses();
+    }
+
+    // Билет не сдан
+    const ticketFalse = () => {
+        setPassed(false);
+        setFailded(true);
+        
+        // Сохранение несданного билета
+        savingData('unresolvedTickets');
+
+        // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
+        savingResponses();
+    }
+
 
     // Удаление с базы данных нерешенного билета
     const deletionFromDatabase = () => {

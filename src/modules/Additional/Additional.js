@@ -12,24 +12,26 @@ import { useEffect, useState } from 'react';
 // Дополнительные вопросы
 const Additional = (props) => {
 
-    const {activeAdditional, wrong, addingAdditionalQuestion} = props;
-
-    // Дополнительные вопросы
-    const [additional, setAdditional] = useState(null);
+    const {activeAdditional, wrong, addingAdditionalQuestion, answered} = props;
 
     useEffect(() => {
-        if(wrong > 3 || !activeAdditional){}else{
+        if(answered === 20){
             createQuestion(wrong);
+            console.log(1);
         }
-    }, [activeAdditional])
+        console.log(answered)
+        console.log(activeAdditional);
+    }, [answered])
 
 
     // Создание тем
-    const createThemes = (randomNumTicket, num) => {
+    const createThemes = (randomNumTicket, from, to) => {
         return questions.filter(el => {
             return el.ticket_number === `Билет ${randomNumTicket}`;
-        }).map(el => {
-            return {...el, title: `Вопрос ${element(el) + 20}`}
+        }).filter(el => {
+            return element(el) >= from && element(el) <= to;
+        }).map((el, i = 1) => {
+            return {...el, title: `Вопрос ${i + 21}`}
         })
     }
 
@@ -43,26 +45,34 @@ const Additional = (props) => {
             let data;
 
             // Получение номера ошибки
-            const numError = +document.querySelector('numbers__list wrong')
+            const numWrapp = document.querySelector('.numbers'),
+                  wrong = +numWrapp.querySelector('.wrong').innerText;
 
             //Рандомный билет
             const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
-
-            console.log(numError);
-
+            console.log(4);
             // Первый тематический блок
-            if(5 < 6){
-                data = createThemes(randomNumTicket).filter(el => {
-                    return element(el) - 20 < 6
-                })
+            if(wrong < 6){
+                const data = createThemes(randomNumTicket, 0, 5)
+                console.log(data);
+                addingAdditionalQuestion(data);
             }
             // Второй тематический блок 
-            else if(numError >= 6 && numError <= 10){
-                data = createThemes(randomNumTicket).filter(el => {
-                    return element(el) >= 6 && element(el) <= 10;
-                })
+            else if(wrong >= 6 && wrong <= 10){
+                const  data = createThemes(randomNumTicket, 6, 10)
+                addingAdditionalQuestion(data);
             }
-            addingAdditionalQuestion(data);
+            // Третий тематический блок 
+            else if(wrong >= 11 && wrong <= 15){
+                const  data = createThemes(randomNumTicket, 11, 15)
+                console.log(data);
+                addingAdditionalQuestion(data);
+            }
+            // Четвертый тематический блок 
+            else if(wrong >= 16 && wrong <= 20){
+                const  data = createThemes(randomNumTicket, 16, 20)
+                addingAdditionalQuestion(data);
+            }
         }
     }
 }

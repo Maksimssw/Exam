@@ -6,7 +6,7 @@ import useModal from '../../../hooks/useModal';
 
 const TicketNumber = (props) =>{
     // Номера всех вопросов
-    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum, save} = props
+    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum, save, answered} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -25,7 +25,7 @@ const TicketNumber = (props) =>{
     // При рендере активация функция неправильного ответа
     useEffect(() => {
         questionNumberWrong(document.getElementById(`${incorrectAnswers}`))
-    }, [incorrectAnswers])
+    }, [incorrectAnswers, answered])
 
     // Сброс номеров    
     useEffect(() => {

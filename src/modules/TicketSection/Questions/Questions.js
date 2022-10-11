@@ -107,7 +107,6 @@ const Questions = (props) =>{
     const handlingIncorrectResponse = (answer) =>{
         
         const num = searchNum(answer);
-
         setIncorrectAnswers(num);
 
         // Получение блока с ошибкой
@@ -116,9 +115,6 @@ const Questions = (props) =>{
 
         // Удаление атрибута hidden для отображения правильного ответа и кнопки 
         mistake.removeAttribute('hidden');
-
-        // Скрол к кнопке "Следующий вопрос"
-        scrollNextQuestion();
 
         // Количество неправильно отвеченных вопросов
         setWrong(wrong + 1);
@@ -136,11 +132,6 @@ const Questions = (props) =>{
 
         // Скрытие кнопки
         e.target.classList.add('hidden');
-    }
-
-    // Скрол к кнопке "Следующий вопрос"
-    const scrollNextQuestion = () =>{
-        button.current.scrollIntoView({ behavior: "smooth" });
     }
 
     // Пройти билет повтороно
@@ -197,6 +188,8 @@ const Questions = (props) =>{
         // Скролл к первому вопросу
         numberProcessing(1);
 
+        setIncorrectAnswers(null);
+
         // При нажатий на кнопку 'Вернутся ко всем билетам', билет не сохранится
         setSaving('');
 
@@ -226,7 +219,8 @@ const Questions = (props) =>{
     const button = useRef(null);
     
     const question = ticket.map((el, i) => {
-        const {title, ticket_number, image, question, answers, correct_answer, answer_tip, topic} = el;
+        const {ticket_number, title, image, question, answers, correct_answer, answer_tip, topic} = el;
+
 
         const answerWrapper = answers.map((el, i) => {
             const {answer_text, is_correct} = el;
@@ -272,7 +266,8 @@ const Questions = (props) =>{
                 rightAnswers={rightAnswers}
                 incorrectAnswers={incorrectAnswers}
                 resetNum={resetNum}
-                save={saving}/>
+                save={saving}
+                answered={allQuestionAnswered}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`,
@@ -282,7 +277,8 @@ const Questions = (props) =>{
                     <Additional
                         wrong={wrong}
                         activeAdditional={activeAdditional}
-                        addingAdditionalQuestion={addingAdditionalQuestion}/>
+                        addingAdditionalQuestion={addingAdditionalQuestion}
+                        answered={allQuestionAnswered}/>
                     <Results 
                         answered={allQuestionAnswered}
                         right={right}
