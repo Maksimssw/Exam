@@ -200,8 +200,9 @@ const Questions = (props) =>{
 
     // Добавление дополнительных вопросов в билет
     const addingAdditionalQuestion = (data) => {
-        if(data !== null) {
-            setTicket(ticket.concat(data));
+    console.log(data);
+        if(data) {
+            setTicket([...ticket, ...data]);
         };
     }
 
@@ -212,7 +213,6 @@ const Questions = (props) =>{
     
     const question = ticket.map((el, i) => {
         const {ticket_number, title, image, question, answers, correct_answer, answer_tip, topic} = el;
-
 
         const answerWrapper = answers.map((el, i) => {
             const {answer_text, is_correct} = el;

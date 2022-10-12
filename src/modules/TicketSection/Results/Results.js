@@ -21,15 +21,11 @@ const Results = (props) => {
     // В случае если билет пройдет , passed будет true
     const [passed, setPassed] = useState(null);
 
-    // В случае если будут дополнительные вопросы , additionally будет true
-    const [additionally, setAdditionally] = useState(null);
-
     // Результаты отвеченных вопросов
     const resultsQuestion = () => {
         const questions = document.querySelectorAll('.question');
         if(answered === questions.length){
             // Билет не сдан , если будет больше 2-ух ошибок
-            console.log(wrong);
             if(wrong > 2){
                 ticketFalse();
             } 
@@ -41,7 +37,7 @@ const Results = (props) => {
             }
 
             // Ошибка Дополнительных вопросов
-            if(answered > 20 && wrong > 1){
+            if(answered > 20 && wrong > 2){
                 ticketFalse();
                 console.log(3);
             } else if(answered > 20){

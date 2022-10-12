@@ -14,27 +14,67 @@ const Additional = (props) => {
 
     const {wrong, addingAdditionalQuestion, answered} = props;
 
+    const [data, setData] = useState([]);
+
     useEffect(() => {
         if(answered === 20){
             createQuestion(wrong);
         }
     }, [answered])
 
+    let arrs = []
 
     // Создание тем
     const createThemes = (randomNumTicket, from, to) => {
-        return questions.filter(el => {
+        // 1 Блок
+        const arr =  questions.filter(el => {
             return el.ticket_number === `Билет ${randomNumTicket}`;
         }).filter(el => {
             return element(el) >= from && element(el) <= to;
         }).map((el, i = 1) => {
             return {...el, title: `Вопрос ${i + 21}`}
-        })
+        });
+
+
+        // 2 Блока
+        arrs.push([...arr]);
+        if(arrs.length === 2){
+            const question =  [...arrs[0], ...arrs[1]]
+            return question.map((el, i) => {
+                return {...el, title: `Вопрос ${i + 21}`}
+            })
+        }
+        return arr;
     }
 
     // Сокращение 
     const element = (el) => {
         return +el.title.replace(/\D/g, '');
+    }
+
+    // Блоки по созданию 
+    const questionCreationBlocks = (wrong, ticket) => {
+        console.log(wrong);
+        let data = []
+
+        // Первый тематический блок
+        if(wrong < 6){
+            data = createThemes(ticket, 0, 5)
+        }
+        // Второй тематический блок 
+        else if(wrong >= 6 && wrong <= 10){
+            data = createThemes(ticket, 6, 10)
+        }
+        // Третий тематический блок 
+        else if(wrong >= 11 && wrong <= 15){
+            data = createThemes(ticket, 11, 15)
+        }
+        // Четвертый тематический блок 
+        else if(wrong >= 16 && wrong <= 20){
+            data = createThemes(ticket, 16, 20)
+        }
+
+        addingAdditionalQuestion(data);
     }
 
     const createQuestion = (wrong) => {
@@ -45,31 +85,19 @@ const Additional = (props) => {
 
             //Рандомный билет
             const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
-            console.log(4);
-            // Первый тематический блок
-            if(wrong < 6){
-                const data = createThemes(randomNumTicket, 0, 5)
-                console.log(data);
-                addingAdditionalQuestion(data);
-            }
-            // Второй тематический блок 
-            else if(wrong >= 6 && wrong <= 10){
-                const  data = createThemes(randomNumTicket, 6, 10)
-                addingAdditionalQuestion(data);
-            }
-            // Третий тематический блок 
-            else if(wrong >= 11 && wrong <= 15){
-                const  data = createThemes(randomNumTicket, 11, 15)
-                console.log(data);
-                addingAdditionalQuestion(data);
-            }
-            // Четвертый тематический блок 
-            else if(wrong >= 16 && wrong <= 20){
-                const  data = createThemes(randomNumTicket, 16, 20)
-                addingAdditionalQuestion(data);
-            }
+
+            questionCreationBlocks(wrong, randomNumTicket);
         }else if(wrong === 2){
-            
+            // Получитить номера ошибок
+            const mistakes = numWrapp.querySelectorAll('.wrong');
+
+            // Обработка дополнительных вопросов для каждой ошибки
+            mistakes.forEach(el => {
+                //Рандомный билет
+                const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
+
+                questionCreationBlocks(+el.innerText, randomNumTicket);
+            })
         }
     }
 }
