@@ -6,7 +6,7 @@ const useCalculator = () => {
             localStorage.getItem(data)
                 .split('-')
                 .filter(function(item, pos) {
-                    return localStorage.getItem(data).indexOf(item) == pos;
+                    return localStorage.getItem(data).indexOf(item) !== pos;
                 })
                 .filter(el => el !== '') : 0;
     }
@@ -19,6 +19,7 @@ const useCalculator = () => {
 
         if(score === 'percent'){
             // Процент пройденых билетов
+            console.log(num);
             return num.length / 40 * 100;
         } else {
             // Число пройденых билетов

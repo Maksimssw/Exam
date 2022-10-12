@@ -12,15 +12,12 @@ import { useEffect, useState } from 'react';
 // Дополнительные вопросы
 const Additional = (props) => {
 
-    const {activeAdditional, wrong, addingAdditionalQuestion, answered} = props;
+    const {wrong, addingAdditionalQuestion, answered} = props;
 
     useEffect(() => {
         if(answered === 20){
             createQuestion(wrong);
-            console.log(1);
         }
-        console.log(answered)
-        console.log(activeAdditional);
     }, [answered])
 
 
@@ -41,12 +38,10 @@ const Additional = (props) => {
     }
 
     const createQuestion = (wrong) => {
+        const numWrapp = document.querySelector('.numbers');
         if(wrong === 1){
-            let data;
-
             // Получение номера ошибки
-            const numWrapp = document.querySelector('.numbers'),
-                  wrong = +numWrapp.querySelector('.wrong').innerText;
+            const wrong = +numWrapp.querySelector('.wrong').innerText;
 
             //Рандомный билет
             const randomNumTicket = Math.floor(Math.random() * (40 - 1) + 1);
@@ -73,6 +68,8 @@ const Additional = (props) => {
                 const  data = createThemes(randomNumTicket, 16, 20)
                 addingAdditionalQuestion(data);
             }
+        }else if(wrong === 2){
+            
         }
     }
 }

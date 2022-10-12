@@ -45,9 +45,6 @@ const Questions = (props) =>{
         +ticket[0].ticket_number.replace(/\D/g, '')
     )
 
-    // Активация дополнительных вопросов
-    const [activeAdditional, setActiveAdditional] = useState(false);
-
     // Сохранение
     const [saving, setSaving] = useState('');
 
@@ -208,11 +205,6 @@ const Questions = (props) =>{
         };
     }
 
-    // Активация дополнительных вопросов
-    const additionalQuestion = () => {
-        setActiveAdditional(true);
-    };
-
     // Сохранение ответов при нажатий на "Вернутся ко всем билетам"
     const savingResponses = () => setSaving('save')
 
@@ -276,7 +268,6 @@ const Questions = (props) =>{
                     {question}
                     <Additional
                         wrong={wrong}
-                        activeAdditional={activeAdditional}
                         addingAdditionalQuestion={addingAdditionalQuestion}
                         answered={allQuestionAnswered}/>
                     <Results 
@@ -285,8 +276,7 @@ const Questions = (props) =>{
                         wrong={wrong}
                         resetQuestions={resetQuestions}
                         ticket={ticketNumber}
-                        savingResponses={savingResponses}
-                        additionalQuestion={additionalQuestion}/>
+                        savingResponses={savingResponses}/>
                 </ul>
             </div>
         </>

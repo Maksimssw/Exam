@@ -9,8 +9,7 @@ const Results = (props) => {
            wrong, 
            resetQuestions, 
            ticket, 
-           savingResponses,
-           additionalQuestion} = props;
+           savingResponses,} = props;
 
     useEffect(() => {
         resultsQuestion();
@@ -34,11 +33,6 @@ const Results = (props) => {
             if(wrong > 2){
                 ticketFalse();
             } 
-            // Дополнительные вопросы 
-            else if (wrong < 2){
-                additionalQuestion();
-                console.log(1);
-            }
             
             // Билет сдан без ошибок
             if(right === 20){
