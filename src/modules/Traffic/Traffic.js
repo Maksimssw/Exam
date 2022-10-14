@@ -20,7 +20,7 @@ const Traffic = () => {
                                 <img src={exclamationMark} alt="exclamation-mark"/>
                             </div>
                         </Link>
-                        <Link className='traffic__btn traffic_light' to='/'>
+                        <Link className='traffic__btn traffic_light' to='/themes'>
                             Темы
                             <div className='traffic__icon'>
                                 <img src={book} alt="book"/>
