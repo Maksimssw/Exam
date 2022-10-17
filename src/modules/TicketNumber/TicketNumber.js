@@ -1,17 +1,19 @@
 import './ticketNumber.scss';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import useModal from '../../../hooks/useModal';
+import useModal from '../../hooks/useModal';
 
 const TicketNumber = (props) =>{
     // Номера всех вопросов
-    const {ticket, numberProcessing, rightAnswers, incorrectAnswers, resetNum, save, answered} = props
+    const {ticket, numberProcessing, rightAnswers, 
+           incorrectAnswers, resetNum, save, answered, scrollNum} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
         numberProcessing(+e.target.innerText);
     }
+
+    const widthNumbersList = useRef();
 
     // Удаление данных при выходе
     const [switchTic, setSwitchTic] = useState(false);
@@ -25,7 +27,24 @@ const TicketNumber = (props) =>{
     // При рендере активация функция неправильного ответа
     useEffect(() => {
         questionNumberWrong(document.getElementById(`${incorrectAnswers}`))
+
+        if(answered > 6){
+            setTranslateX(translateX + widthNumbersList.current.offsetWidth + 10);
+        }
     }, [incorrectAnswers, answered])
+
+
+    // Скролл номеров вопросов
+    const [translateX, setTranslateX] = useState(
+        scrollNum !== false ? 0 : null
+    );
+
+     //Сброс скролла номеров вопросов
+     useEffect(() => {
+        if(scrollNum){
+            setTranslateX(0);
+        }
+    }, [scrollNum])
 
     // Сброс номеров    
     useEffect(() => {
@@ -65,18 +84,24 @@ const TicketNumber = (props) =>{
         }
     }
 
+    // Создание номеров
     const numbers = ticket === undefined ? null : ticket.map((el, i) => {
 
         // Получение номера вопроса
         const num = el.title.replace(/\D/g, '');
 
-        // Создание номера
         return (
-            <li onClick={(e) => getQuestionNumber(e)} id={num} key={num} className='numbers__list'>
+            <li onClick={(e) => getQuestionNumber(e)} 
+                id={num} 
+                key={num} 
+                className='numbers__list'
+                ref={widthNumbersList}>
                 {num}
             </li>
         )
     });
+
+    console.log(save);
 
     return(
         <>
@@ -88,7 +113,9 @@ const TicketNumber = (props) =>{
                         ← Вернутся ко всем билетам
                 </Link>
             </div>
-            <ul className='numbers'>
+            <ul 
+                className='numbers'
+                style={{transform: `translateX(-${translateX}px)`}}>
                 {numbers}
             </ul>
             <DeletingData

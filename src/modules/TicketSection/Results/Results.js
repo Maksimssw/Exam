@@ -29,20 +29,21 @@ const Results = (props) => {
             if(wrong > 2){
                 ticketFalse();
             } 
-            
+        
             // Билет сдан без ошибок
             if(right === 20){
                 ticketTrue();
-                console.log(3);
+
+                // При нажатий на кнопку 'Вернутся ко всем билетам', 
+                // билет сохранится
+                savingResponses();
             }
 
             // Ошибка Дополнительных вопросов
             if(answered > 20 && wrong > 2){
                 ticketFalse();
-                console.log(3);
             } else if(answered > 20){
                 ticketTrue();
-                console.log(3);
             }
         } 
     }
