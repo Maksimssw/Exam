@@ -13,7 +13,7 @@ const Questions = (props) =>{
     const {widthTranslate, numberProcessing, translateX, ticket, allQuestionAnswered,
         rightAnswers, incorrectAnswers, right, wrong,
         addingAdditionalQuestion, resetQuestions, savingResponses, resetNum,
-        saving, question, scrollNum} = useSlider(
+        saving, question} = useSlider(
         width,
         wholTicket
     );
@@ -35,7 +35,7 @@ const Questions = (props) =>{
                 resetNum={resetNum}
                 save={saving}
                 answered={allQuestionAnswered}
-                scrollNum={scrollNum}/>
+                way={`/tickets`}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`,

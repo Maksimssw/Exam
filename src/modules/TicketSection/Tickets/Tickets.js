@@ -77,6 +77,7 @@ const Tickets = (props) => {
             arrFil.forEach(el => {
                 const ticketList = document.getElementById(`ticket-${el}`);
 
+                console.log(ticketList);
                 ticketList.classList.add(style);
             })
         }

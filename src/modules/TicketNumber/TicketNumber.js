@@ -6,7 +6,7 @@ import useModal from '../../hooks/useModal';
 const TicketNumber = (props) =>{
     // Номера всех вопросов
     const {ticket, numberProcessing, rightAnswers, 
-           incorrectAnswers, resetNum, save, answered, scrollNum} = props
+           incorrectAnswers, resetNum, save, answered, way} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -29,22 +29,20 @@ const TicketNumber = (props) =>{
         questionNumberWrong(document.getElementById(`${incorrectAnswers}`))
 
         if(answered > 6){
-            setTranslateX(translateX + widthNumbersList.current.offsetWidth + 10);
+            const numListWidth = widthNumbersList.current.querySelector('.numbers__list').offsetWidth;
+
+            setTranslateX(translateX + numListWidth + 10);
         }
+
+        if(answered === 0){
+            setTranslateX(0);
+        }
+
     }, [incorrectAnswers, answered])
 
 
     // Скролл номеров вопросов
-    const [translateX, setTranslateX] = useState(
-        scrollNum !== false ? 0 : null
-    );
-
-     //Сброс скролла номеров вопросов
-     useEffect(() => {
-        if(scrollNum){
-            setTranslateX(0);
-        }
-    }, [scrollNum])
+    const [translateX, setTranslateX] = useState(0);
 
     // Сброс номеров    
     useEffect(() => {
@@ -94,14 +92,11 @@ const TicketNumber = (props) =>{
             <li onClick={(e) => getQuestionNumber(e)} 
                 id={num} 
                 key={num} 
-                className='numbers__list'
-                ref={widthNumbersList}>
+                className='numbers__list'>
                 {num}
             </li>
         )
     });
-
-    console.log(save);
 
     return(
         <>
@@ -115,12 +110,14 @@ const TicketNumber = (props) =>{
             </div>
             <ul 
                 className='numbers'
-                style={{transform: `translateX(-${translateX}px)`}}>
+                style={{transform: `translateX(-${translateX}px)`}}
+                ref={widthNumbersList}>
                 {numbers}
             </ul>
             <DeletingData
                     switchTic={switchTic}
                     ticket={modal}
+                    way={way}
                     />
         </>
     )
@@ -128,7 +125,7 @@ const TicketNumber = (props) =>{
 
 // Удаление данных
 const DeletingData = (props) => {
-    const {switchTic,ticket} = props;
+    const {switchTic,ticket, way} = props;
 
     const {closingModalWindow, modal} = useModal({
         ticket: ticket,
@@ -142,7 +139,7 @@ const DeletingData = (props) => {
                 <h2 className='modal__title'>Данные ответов будут удалены!</h2>
                 <div className='modal__btns'>
                     <Link 
-                        to={`/tickets`} 
+                        to={way} 
                         className='modal__btn modal__btn_again'
                         onClick={closingModalWindow}> Продолжить
                     </Link>

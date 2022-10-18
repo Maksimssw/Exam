@@ -3,7 +3,7 @@ import './questions.scss';
 
 const useSlider = (width, wholTicket) => {
 
-    const [widthTranslate, setWidthTranslate] = useState(10000);
+    const [widthTranslate, setWidthTranslate] = useState('fit-content');
     const [translateX, setTranslateX] = useState(0);
 
     // Скролл к следующему вопросу
@@ -14,9 +14,6 @@ const useSlider = (width, wholTicket) => {
     useEffect(() => {
         setWidthTranslate(ticket.lenght * 100 + 100);
     }, [])
-
-    // Скролл номеров вопросов
-    const [scrollNum, setScrollNum] = useState(false);
 
     // Все номера отвечаенных на вопрос
     const [allQuestionAnswered, setAllQuestionAnswered] = useState(0);
@@ -230,15 +227,12 @@ const useSlider = (width, wholTicket) => {
         numberProcessing(1);
 
         setIncorrectAnswers(null);
-
-        setScrollNum(!scrollNum)
-        console.log(scrollNum);
     }
 
     return {widthTranslate, translateX, numberProcessing, allQuestionAnswered,
         rightAnswers, incorrectAnswers, wrong, ticket, setAnswerUser, processingCorrectAnswer,
         handlingIncorrectResponse, searchNum, question, addingAdditionalQuestion,
-        resetQuestions, savingResponses, resetNum, saving, question, scrollNum, right}
+        resetQuestions, savingResponses, resetNum, saving, right}
 }
 
 export default useSlider;

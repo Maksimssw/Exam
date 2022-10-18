@@ -2,13 +2,14 @@ const useCalculator = () => {
 
     // Получение данных с LocalStorage 
     const getData = (data) => {
-        return localStorage.getItem(data) ? 
-            localStorage.getItem(data)
-                .split('-')
-                .filter(function(item, pos) {
-                    return localStorage.getItem(data).indexOf(item) !== pos;
-                })
-                .filter(el => el !== '') : 0;
+        const arr =  localStorage.getItem(data) ? 
+            localStorage.getItem(data).split('-') : 0;
+                
+        try{
+            return Array.from(new Set(arr)).filter(el => el !== '')
+        }catch{
+            return 0;
+        }
     }
     
     // Подсчет решенных билетов
@@ -19,7 +20,6 @@ const useCalculator = () => {
 
         if(score === 'percent'){
             // Процент пройденых билетов
-            console.log(num);
             return num.length / 40 * 100;
         } else {
             // Число пройденых билетов

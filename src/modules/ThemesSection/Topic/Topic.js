@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import TicketNumber from "../../TicketNumber/TicketNumber";
 import useSlider from "../../../hooks/useSlider";
+import Results from "../Results/Results";
 
 const Topic = (props) => {
-    const {data} = props;
+    const {data, num} = props;
 
     const width = useRef();
 
@@ -29,6 +30,7 @@ const Topic = (props) => {
                 resetNum={resetNum}
                 save={saving}
                 answered={allQuestionAnswered}
+                way={'/themes'}
             />
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
@@ -36,6 +38,11 @@ const Topic = (props) => {
                     width: `${widthTranslate}%`
                 }}>
                     {question}
+                    <Results 
+                        wrong={wrong} 
+                        answered={allQuestionAnswered}
+                        num={num}
+                        />
                 </ul>
             </div>
         </>

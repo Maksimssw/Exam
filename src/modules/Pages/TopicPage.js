@@ -8,8 +8,10 @@ const TopicPage = () => {
     const nswr = useParams();
     const {idTopic} = nswr
 
-    const [topic, setTopic] = useState(idTopic);
-
+    console.log(idTopic);
+    const [topic, setTopic] = useState(idTopic.replace(/\w/g, ''));
+    const [num, setNum] = useState(+idTopic.replace(/\W/g, ''))
+    
     const questionsTopic = questions.filter(el => {
         return el.topic === topic
     }).map((el, i) => {
@@ -19,7 +21,7 @@ const TopicPage = () => {
     return(
         <section>
             <div className="container">
-                <Topic data={questionsTopic}/>
+                <Topic data={questionsTopic} num={num}/>
             </div>
         </section>
     )

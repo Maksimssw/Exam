@@ -7,15 +7,13 @@ const Themes = (data) => {
     // Все темы
     const [themes, useThemes] = useState(Array.from(data.data));
 
-    console.log(themes);
-
     // Создание тем
     const topic =  themes !== false ? themes.map((el, i) => {
         return(
             <li key={i} className="themes__list">
                 {i + 1})
                 <Link 
-                    to={`/themes/${el}`}
+                    to={`/themes/${el}${i + 1}`}
                     className="themes__link">
                         {el}
                 </Link>

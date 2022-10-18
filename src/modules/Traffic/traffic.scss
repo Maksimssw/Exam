@@ -18,8 +18,7 @@
         color: #fff;
         transition: 0.3s all;
         &:hover, &:focus{
-            opacity: 0.8;
-            animation-fill-mode: none;
+            background: #c5d8ef;
         }
     }
     &_light{
@@ -39,13 +38,22 @@
         background: #db011c;
         animation: up 300ms linear 300ms;
         animation-fill-mode: forwards;
+        &:hover, &:focus{
+            background: #e9132c;
+        }
     }
     &_tickets{
         animation: up 300ms linear;
         animation-fill-mode: forwards;
+        &:hover, &:focus{
+            background: #307dca;
+        }
     }
     &_mistakes{
         animation: up 300ms linear 500ms;
         animation-fill-mode: forwards;
+        &:hover, &:focus{
+            background: #c5d8ef;
+        }
     }
 }
