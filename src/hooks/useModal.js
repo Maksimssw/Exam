@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useModal = ({ticket, switchTic}) => {
+const useModal = ({num, switchTic}) => {
 
     // Состояние модального окна
     const [modal, setModal] = useState('closed');
@@ -10,19 +10,19 @@ const useModal = ({ticket, switchTic}) => {
 
     // Открытие модального окна
     useEffect(() => {
-        if(ticket || switchTic){
+        if(num || switchTic){
             setModal('active'); 
         }
     }, [switchTic])
     
     // Удаление решенного ответа
-    const deletingResolvedTicket = () => {
-        const local = localStorage.getItem('solvedTickets')
+    const deletingResolvedTicket = (name) => {
+        const local = localStorage.getItem(name)
             .split('-')
-            .filter(el => el !== ticket)
+            .filter(el => el !== num)
             .join('-');
-        localStorage.removeItem('solvedTickets');
-        localStorage.setItem('solvedTickets', local);
+        localStorage.removeItem(name);
+        localStorage.setItem(name, local);
     } 
 
     return {closingModalWindow, modal, deletingResolvedTicket}

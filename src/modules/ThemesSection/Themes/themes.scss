@@ -11,7 +11,13 @@
         border-bottom: 1px solid #f5f5f5;
         padding-bottom: 30px;
         display: flex;
-        gap: 10px
+        align-items: center;
+        gap: 10px;
+        &::after{
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+        }
     }
     &__title{
         margin-bottom: 30px;
@@ -24,5 +30,19 @@
             outline: none;
             opacity: 0.7;
         }
+    }
+}
+
+.themes__list.passed{
+    &::after{
+        background: #85b73e;
+        content: '';
+    }
+}
+
+.themes__list.not_passed{
+    &::after{
+        background: #db0117;
+        content: ''
     }
 }

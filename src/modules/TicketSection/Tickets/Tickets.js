@@ -142,7 +142,8 @@ const RepeatTicket = (props) => {
                     <Link 
                         to={`/tickets/${ticket}`} 
                         className='modal__btn modal__btn_again'
-                        onClick={deletingResolvedTicket}> Пройти заново
+                        onClick={() => deletingResolvedTicket('solvedTickets')}>
+                             Пройти заново
                     </Link>
                     <button className='modal__btn modal__btn_cancellation'  
                             onClick={closingModalWindow}>

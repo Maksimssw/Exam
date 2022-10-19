@@ -21,6 +21,11 @@ const Results = (props) => {
         <h2 className="results__title"> Тренеруйтесь!</h2>
         <p className="results__subtitle">{wrong} {endingOne} {endingToFor} {endingMany}</p>
         <Link className="results__btn" to='/mistakes'>МОИ ОШИБКИ</Link>
+        <Link 
+            className="results__btn" 
+            to={`/themes`}>
+                Следующая тема
+        </Link>
         <div className="results__more"
              onClick={() => reboot()}>ПРОЙТИ ЕЩЕ РАЗ</div>
     </div> : null
@@ -31,7 +36,7 @@ const Results = (props) => {
         <p className="results__subtitle">{wrong} {endingOne} {endingToFor} {endingMany}</p>
         <Link 
             className="results__btn" 
-            to={`/tickets`}>
+            to={`/themes`}>
                 Следующая тема
         </Link>
         <div className="results__more"
