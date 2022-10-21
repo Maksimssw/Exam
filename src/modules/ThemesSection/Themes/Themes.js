@@ -85,7 +85,10 @@ const Themes = (data) => {
     return(
         <section className="themes">
             <div className="container">
-                <h1 className="themes__title">Тренеровка по темам</h1>
+                <div className="themes__heading">
+                    <Link to={'/'}>←</Link>
+                    <h1 className="themes__title">Тренеровка по темам</h1>
+                </div>
                 <nav>
                     <ul className="themes__wrapper">
                         {topic}
