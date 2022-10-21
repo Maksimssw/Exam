@@ -35,7 +35,8 @@ const Questions = (props) =>{
                 resetNum={resetNum}
                 save={saving}
                 answered={allQuestionAnswered}
-                way={`/tickets`}/>
+                way={`/tickets`}
+                text={'билетам'}/>
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{
                     transform: `translateX(-${translateX}px)`,

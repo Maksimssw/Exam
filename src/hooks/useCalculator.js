@@ -44,7 +44,22 @@ const useCalculator = () => {
         }
     }
 
-    return {coutingSolvedTickets, coutingSolvedQuestion}
+    // Подсчет решшеных тем
+    const coutingSolvedThemes = (score) => {
+        const num = getData('passedTopic');
+        console.log(num.length);
+        if (num === 0) return num
+
+        if(score === 'percent'){
+            // Процент пройденых тем
+            return num.length / 27 * 100;
+        } else {
+            // Число пройденых тем
+            return num.length
+        }
+    }
+ 
+    return {coutingSolvedTickets, coutingSolvedQuestion, coutingSolvedThemes}
 }
 
 export default useCalculator;

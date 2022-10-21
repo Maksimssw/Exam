@@ -6,7 +6,7 @@ import useModal from '../../hooks/useModal';
 const TicketNumber = (props) =>{
     // Номера всех вопросов
     const {ticket, numberProcessing, rightAnswers, 
-           incorrectAnswers, resetNum, save, answered, way} = props
+           incorrectAnswers, resetNum, save, answered, way, text} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -105,7 +105,7 @@ const TicketNumber = (props) =>{
                     to='/tickets'
                     onClick={(e) => openModal(e)} 
                     className={save}>
-                        ← Вернутся ко всем билетам
+                        ← Вернутся ко всем {text}
                 </Link>
             </div>
             <ul 

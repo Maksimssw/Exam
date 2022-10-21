@@ -31,6 +31,7 @@ const Topic = (props) => {
                 save={saving}
                 answered={allQuestionAnswered}
                 way={'/themes'}
+                text={'темам'}
             />
             <div ref={width} className='questions'>
                 <ul className='questions__wrapper' style={{

@@ -3,7 +3,9 @@ import useCalculator from '../../hooks/useCalculator';
 
 const Header = () => {
 
-    const {coutingSolvedTickets, coutingSolvedQuestion} = useCalculator();
+    const {coutingSolvedTickets, coutingSolvedQuestion, coutingSolvedThemes} = useCalculator();
+
+    const num = +coutingSolvedThemes('percent').toFixed(2);
 
     return(
         <>
@@ -30,10 +32,10 @@ const Header = () => {
                             <p className='header__heading'>Билеты</p>
                         </div>
                         <div className="header__list">
-                            <p className='header__text'>0 / 27</p>
+                            <p className='header__text'>{coutingSolvedThemes()} / 27</p>
                             <div className="header__scale">
                                 <div className='header__active' style={{
-                                    width: `0%`
+                                    width: `${num}%`
                                 }}></div>
                             </div>
                             <p className='header__heading'>Темы</p>
