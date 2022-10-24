@@ -6,7 +6,7 @@ import useModal from '../../hooks/useModal';
 const TicketNumber = (props) =>{
     // Номера всех вопросов
     const {ticket, numberProcessing, rightAnswers, 
-           incorrectAnswers, resetNum, save, answered, way, text} = props
+           incorrectAnswers, resetNum, save, answered, way, text, exam} = props
 
     // Получение номера 1 вопроса
     const getQuestionNumber = (e) => {
@@ -61,17 +61,26 @@ const TicketNumber = (props) =>{
         }
     }
 
+    // Белый цвет конопки 
+    const examStyle = (el, answer) => {
+        if(exam && answer) el.classList.add('exam')
+    }
+
     // Добавление стилей для правильного ответа
     const questionNumberCorrectly = (el) => {
         // Сделать номер зеленого цвета
         if(rightAnswers) el.classList.add('active')
+
+        examStyle(el, rightAnswers);
     }
 
      // Добавление стилей для неправильного ответа
     const questionNumberWrong = (el) => {
         // Сделать номер красного цвета
         if(incorrectAnswers) el.classList.add('wrong')
-    }
+
+        examStyle(el, incorrectAnswers);
+    } 
 
     // Открытие модального окна о закрытие страницы
     const openModal = (e) =>  {

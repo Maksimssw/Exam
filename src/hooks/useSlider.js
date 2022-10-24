@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import './questions.scss';
 
-const useSlider = (width, wholTicket) => {
+const useSlider = (width, wholTicket, exam) => {
 
     const [widthTranslate, setWidthTranslate] = useState('fit-content');
     const [translateX, setTranslateX] = useState(0);
@@ -60,9 +60,11 @@ const useSlider = (width, wholTicket) => {
 
             if(boolean){
                 answer.classList.add('right');
+                if(exam) answer.classList.add('exam');
                 processingCorrectAnswer(answer);
             } else{
                 answer.classList.add('wrong');
+                if(exam) answer.classList.add('exam');
                 handlingIncorrectResponse(answer);
             } 
         }
@@ -99,8 +101,13 @@ const useSlider = (width, wholTicket) => {
         const question  = answer.closest('.question');
         const mistake = question.querySelector('.mistake');
 
-        // Удаление атрибута hidden для отображения правильного ответа и кнопки 
-        mistake.removeAttribute('hidden');
+        if(!exam){
+            // Удаление атрибута hidden для отображения правильного ответа и кнопки 
+            mistake.removeAttribute('hidden');
+        } else{
+            // Скролл к следующему вопросу
+            numberProcessing(num + 1);
+        }
 
         // Количество неправильно отвеченных вопросов
         setWrong(wrong + 1);
@@ -135,6 +142,7 @@ const useSlider = (width, wholTicket) => {
         setSaving('save');
     }
 
+
     // Создание вопросов
     const question = ticket.map((el, i) => {
         const {ticket_number, title, image, question, answers, correct_answer, answer_tip, topic} = el;
@@ -142,7 +150,7 @@ const useSlider = (width, wholTicket) => {
         const answerWrapper = answers.map((el, i) => {
             const {answer_text, is_correct} = el;
 
-            return(
+            return( 
                 <li key={i} onClick={(e) => setAnswerUser(e, is_correct)} className='answers__list' boleen={`${is_correct}`}>{i + 1}.{answer_text}</li>
             )
         })
@@ -180,8 +188,6 @@ const useSlider = (width, wholTicket) => {
     const resetQuestions = (e) => {
         const questions = e.target.closest('.questions'),
               question = questions.querySelectorAll('.question');
-
-        const  ticketNum = document.querySelector('.question__ticket').innerText.replace(/\D/g, '');
 
         // Сброс стилей в каждом вопросе
         question.forEach(el => {

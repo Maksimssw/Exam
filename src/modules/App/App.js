@@ -1,7 +1,7 @@
 import Traffic from "../Traffic/Traffic";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { Suspense } from "react";
-import { TicketsPage, TicketPage, ThemesPage, TopicPage } from "../Pages";
+import { TicketsPage, TicketPage, ThemesPage, TopicPage, ExamPage } from "../Pages";
 
 const App = () => {
     return (
@@ -13,6 +13,7 @@ const App = () => {
                     <Route path="/tickets/:idTicket" element={<TicketPage/>}/>
                     <Route path="/themes" element={<ThemesPage/>} />
                     <Route path="/themes/:idTopic" element={<TopicPage/>}/>
+                    <Route path="/exam" element={<ExamPage/>}/>
                 </Routes>
             </Router>
         </Suspense>

@@ -67,34 +67,44 @@ const useCouting = ({answered,
 
     // Билет сдан
     const ticketTrue = () => {
-        setPassed(true);
-        setFailded(false);
+        if(ticket === false){
+            setPassed(true);
+            setFailded(false);
+        } else{
+            setPassed(true);
+            setFailded(false);
 
-        // Сохранение сданных билетов
-        savingData('solvedTickets')
+            // Сохранение сданных билетов
+            savingData('solvedTickets')
 
-        // Удаление с базы данных нерешенного билета
-        // В случае если билет решили правильно
-        deletionFromDatabase('unresolvedTickets');
+            // Удаление с базы данных нерешенного билета
+            // В случае если билет решили правильно
+            deletionFromDatabase('unresolvedTickets');
 
-        // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
-        savingResponses();
+            // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
+            savingResponses();
+        }
     }
 
     // Билет не сдан
     const ticketFalse = () => {
-        setPassed(false);
-        setFailded(true);
-        
-        // Сохранение несданного билета
-        savingData('unresolvedTickets');
+        if(ticket === false){
+            setPassed(false);
+            setFailded(true);
+        }else {
+            setPassed(false);
+            setFailded(true);
+            
+            // Сохранение несданного билета
+            savingData('unresolvedTickets');
 
-        // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
-        savingResponses();
+            // При нажатий на кнопку 'Вернутся ко всем билетам', билет сохранится
+            savingResponses();
 
-        // Удаление с базы данных решенного билета
-        // В случае если билет решили неправильно
-        deletionFromDatabase('solvedTickets');
+            // Удаление с базы данных решенного билета
+            // В случае если билет решили неправильно
+            deletionFromDatabase('solvedTickets');
+        }
     }
 
 
@@ -115,6 +125,7 @@ const useCouting = ({answered,
     const savingData = (name) => {
         const local = localStorage.getItem(name);
         localStorage.removeItem(name);
+        console.log(ticket);
         
         const res = `${local + ticket}-`;
         

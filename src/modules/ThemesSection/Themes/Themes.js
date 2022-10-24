@@ -42,7 +42,9 @@ const Themes = (data) => {
             arr.forEach(el => {
                 const themesList = document.getElementById(el);
 
-                themesList.classList.add(style);
+                try{
+                    themesList.classList.add(style);
+                } catch{}
             })
         }
     }

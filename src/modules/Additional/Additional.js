@@ -14,8 +14,6 @@ const Additional = (props) => {
 
     const {wrong, addingAdditionalQuestion, answered} = props;
 
-    const [data, setData] = useState([]);
-
     useEffect(() => {
         if(answered === 20){
             createQuestion(wrong);
