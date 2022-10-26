@@ -45,12 +45,18 @@ const useSlider = (width, wholTicket, exam) => {
         // Получение нажатого элемента
         const answer = e.target;
 
-        const answersWrapper = answer.closest('.answers');
+        const answersWrapper = answer.closest('.question');
 
         // boolean приходит с JSON
-        // true - Пользователь ответил правильно и активируется функция  обработки правильного ответа
-        // false - Пользователь ответил неправильно и активируется функция обработки неправильного ответа
-        
+        // true - Пользователь ответил правильно, активируется функция  обработки правильного ответа
+        // false - Пользователь ответил неправильно, активируется функция обработки неправильного ответа
+
+        // Номер билета
+        const ticNumber = answersWrapper.querySelector('.question__ticket').innerText.replace(/\D/g, '');
+
+        // Номер вопроса
+        const quesNum = answersWrapper.querySelector('.question__title').innerText.replace(/\D/g, '');
+
         if(answersWrapper.classList.contains('hidden')){
 
         }else{
@@ -61,11 +67,11 @@ const useSlider = (width, wholTicket, exam) => {
             if(boolean){
                 answer.classList.add('right');
                 if(exam) answer.classList.add('exam');
-                processingCorrectAnswer(answer);
+                processingCorrectAnswer(answer, ticNumber, quesNum);
             } else{
                 answer.classList.add('wrong');
                 if(exam) answer.classList.add('exam');
-                handlingIncorrectResponse(answer);
+                handlingIncorrectResponse(answer, ticNumber, quesNum);
             } 
         }
     }
@@ -77,8 +83,32 @@ const useSlider = (width, wholTicket, exam) => {
         };
     }
 
+    // Обработка ошибок
+    const errorHandling = (tic, ques, del) => {
+        if(del === 'delete'){
+            try{
+                // Убрать ошибку
+                const local = localStorage.getItem('mistakes')
+                                .split('-')
+                                .filter(el => el !== `${tic}_${ques}`)
+                                .join('-');
+
+                localStorage.removeItem('mistakes');
+                localStorage.setItem('mistakes', local);
+            }catch{}
+        } else {
+            // Добавить ошибку
+            const local = localStorage.getItem('mistakes') ? localStorage.getItem('mistakes') : '';
+            localStorage.removeItem('mistakes');
+
+            const res = `${tic}_${ques}-`
+
+            localStorage.setItem('mistakes', res + local);  
+        }
+    }
+
     // Обработка правильного ответа
-    const processingCorrectAnswer = (answer) => {
+    const processingCorrectAnswer = (answer, tic, ques) => {
 
         const num = searchNum(answer);
 
@@ -89,10 +119,13 @@ const useSlider = (width, wholTicket, exam) => {
 
         // Количество правильно отвеченных вопросов
         setRight(right + 1);
+
+        // Удалить ошибки
+        errorHandling(tic, ques, 'delete')
     }
 
     // Обработка неправильного ответа
-    const handlingIncorrectResponse = (answer) =>{
+    const handlingIncorrectResponse = (answer, tic, ques) =>{
         
         const num = searchNum(answer);
         setIncorrectAnswers(num);
@@ -111,6 +144,9 @@ const useSlider = (width, wholTicket, exam) => {
 
         // Количество неправильно отвеченных вопросов
         setWrong(wrong + 1);
+
+        // Добавление ошибки 
+        errorHandling(tic, ques);
     }
 
     // Пойск номера вопроса 
