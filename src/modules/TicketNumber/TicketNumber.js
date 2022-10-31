@@ -8,9 +8,11 @@ const TicketNumber = (props) =>{
     const {ticket, numberProcessing, rightAnswers, 
            incorrectAnswers, resetNum, save, answered, way, text, exam} = props
 
-    // Получение номера 1 вопроса
+    // Получение номера вопроса
     const getQuestionNumber = (e) => {
-        numberProcessing(+e.target.innerText);
+        const attr = +e.target.getAttribute('data-list');
+
+        numberProcessing(attr);
     }
 
     const widthNumbersList = useRef();
@@ -98,9 +100,9 @@ const TicketNumber = (props) =>{
         const num = el.title.replace(/\D/g, '');
 
         return (
-            <li onClick={(e) => getQuestionNumber(e)} 
+            <li data-list={i + 1} onClick={(e) => getQuestionNumber(e)} 
                 id={num} 
-                key={num} 
+                key={`${el.title}_${num}`}
                 className='numbers__list'>
                 {num}
             </li>
@@ -117,12 +119,14 @@ const TicketNumber = (props) =>{
                         ← Вернутся ко всем {text}
                 </Link>
             </div>
-            <ul 
-                className='numbers'
-                style={{transform: `translateX(-${translateX}px)`}}
-                ref={widthNumbersList}>
-                {numbers}
-            </ul>
+            <div className='wrapper-number'>   
+                <ul 
+                    className='numbers'
+                    style={{transform: `translateX(-${translateX}px)`}}
+                    ref={widthNumbersList}>
+                    {numbers}
+                </ul>
+            </div>
             <DeletingData
                     switchTic={switchTic}
                     ticket={modal}

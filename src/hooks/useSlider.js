@@ -6,9 +6,31 @@ const useSlider = (width, wholTicket, exam) => {
     const [widthTranslate, setWidthTranslate] = useState('fit-content');
     const [translateX, setTranslateX] = useState(0);
 
+    useEffect(() => {
+        const wrapp = document.querySelector('.questions').offsetWidth;
+        const item = document.querySelectorAll('.question');
+        const res = document.querySelectorAll('.results');
+        
+        console.log(item);
+        item.forEach((el) => {
+            el.style.width = wrapp + 'px';
+        })
+
+        res.forEach((el)=> {
+            el.style.width = wrapp + 'px';
+        })
+    }, [2])
+
     // Скролл к следующему вопросу
     const numberProcessing = (num) => {
-        setTranslateX(num * width.current.offsetWidth - width.current.offsetWidth);
+        console.log(num)
+        try{
+            const res = +document.getElementById(num).getAttribute('data-list')
+            setTranslateX((res + 1) * width.current.offsetWidth - width.current.offsetWidth);
+        } catch{
+            const res = +document.querySelector(`[data-list='${num}']`);
+            setTranslateX(res * width.current.offsetWidth - width.current.offsetWidth);
+        }
     }
 
     useEffect(() => {
@@ -98,12 +120,16 @@ const useSlider = (width, wholTicket, exam) => {
             }catch{}
         } else {
             // Добавить ошибку
-            const local = localStorage.getItem('mistakes') ? localStorage.getItem('mistakes') : '';
+            const local = localStorage.getItem('mistakes') ? localStorage.getItem('mistakes').split('-') : [];
             localStorage.removeItem('mistakes');
 
-            const res = `${tic}_${ques}-`
+            const mistake = `${tic}_${ques}-`
 
-            localStorage.setItem('mistakes', res + local);  
+            local.push(mistake);
+
+            const res = [...new Set(local)].join('-')
+
+            localStorage.setItem('mistakes', res);  
         }
     }
 
@@ -113,9 +139,9 @@ const useSlider = (width, wholTicket, exam) => {
         const num = searchNum(answer);
 
         setRightAnswers(num)
-        
+
         // Скролл к следующему вопросу
-        numberProcessing(num + 1);
+        numberProcessing(num);
 
         // Количество правильно отвеченных вопросов
         setRight(right + 1);
@@ -139,7 +165,7 @@ const useSlider = (width, wholTicket, exam) => {
             mistake.removeAttribute('hidden');
         } else{
             // Скролл к следующему вопросу
-            numberProcessing(num + 1);
+            numberProcessing(num);
         }
 
         // Количество неправильно отвеченных вопросов
@@ -162,12 +188,11 @@ const useSlider = (width, wholTicket, exam) => {
     // Обработка кнопки "Следующий вопрос"
     const nextQuestion = (e) => {
         e.preventDefault();
-
-        // Получение номера вопроса 
+    
         const num = searchNum(e.target);
-        
+
         // Скролл к следующему вопросу
-        numberProcessing(num + 1);
+        numberProcessing(num);
 
         // Скрытие кнопки
         e.target.classList.add('hidden');
@@ -194,7 +219,7 @@ const useSlider = (width, wholTicket, exam) => {
         const img = image.replace(/.\Dimages\D/, '');
 
         return(
-            <li key={i} className='question'>
+            <li key={i} className='question' data-ques={i + 1}>
                 <div className='question__info'>
                     <p className='question__ticket'>{ticket_number}</p>
                     <p className='question__title'>{title}</p>

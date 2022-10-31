@@ -14,7 +14,7 @@ const Traffic = () => {
                     <div className='traffic__wrapper'>
                         <Link className='traffic__btn traffic_tickets' to='/tickets'>Билеты AB</Link>
                         <Link className='traffic__btn traffic_exam' to='/exam'>Экзамен</Link>
-                        <Link className='traffic__btn traffic_light traffic_mistakes' to='/'>
+                        <Link className='traffic__btn traffic_light traffic_mistakes' to='/mistakes'>
                             Ошибки
                             <div className='traffic__icon'>
                                 <img src={exclamationMark} alt="exclamation-mark"/>

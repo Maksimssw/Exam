@@ -44,10 +44,9 @@ const useCalculator = () => {
         }
     }
 
-    // Подсчет решшеных тем
+    // Подсчет решенных тем
     const coutingSolvedThemes = (score) => {
         const num = getData('passedTopic');
-        console.log(num.length);
         if (num === 0) return num
 
         if(score === 'percent'){
