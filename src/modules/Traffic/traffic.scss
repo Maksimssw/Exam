@@ -1,6 +1,8 @@
 @import '../App/animate.scss';
+@import '../App/app.scss';
 
 .traffic{
+    padding-bottom: 30px;
     &__wrapper{
         display: grid;
         justify-content: center;

@@ -1,7 +1,15 @@
+import { lazy } from "react";
 import Traffic from "../Traffic/Traffic";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { Suspense } from "react";
-import { TicketsPage, TicketPage, ThemesPage, TopicPage, ExamPage, MistakesPage} from "../Pages";
+import '../Style/modal.scss';
+
+const TicketsPage = lazy(() => import('../Pages/TicketsPage'));
+const TicketPage = lazy(() => import('../Pages/TicketPage'));
+const ThemesPage = lazy(() => import('../Pages/ThemesPage'));
+const TopicPage = lazy(() => import('../Pages/TopicPage'));
+const ExamPage = lazy(() => import('../Pages/ExamPage'));
+const MistakesPage = lazy(() => import('../Pages/MistakesPage'));
 
 const App = () => {
     return (

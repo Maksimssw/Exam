@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useCouting  from '../../../hooks/useCouting'
 import { Link } from "react-router-dom";
+import '../../TicketSection/Results/results.scss';
 
 const Results = (props) => {
     const {wrong, answered, num} = props

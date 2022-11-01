@@ -11,6 +11,7 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-uuid": "^2.0.0",
     "sass": "^1.54.0",
     "sass-loader": "^13.0.2",
     "scss": "^0.2.4",

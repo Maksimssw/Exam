@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from "react"
+import { useRef } from "react"
 import useSlider from "../../../hooks/useSlider";
 import TicketNumber from "../../TicketNumber/TicketNumber";
 import Additional from "../../Additional/Additional";
 import Results from "../Result/Result";
+import './exam.scss';
 
 const Exam  = (props) => {
 

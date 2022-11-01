@@ -66,8 +66,6 @@ const Tickets = (props) => {
     const changingStyle = (ticket, style) => {
         if(ticketsList.length === 40 && ticket){
             const arr = ticket.split('-');
-        
-            console.log(arr);
 
             // Удаление повторяющих номеров билетов и пробелов
             const arrFil =  arr.filter((item, index) => {
@@ -76,8 +74,6 @@ const Tickets = (props) => {
 
             arrFil.forEach(el => {
                 const ticketList = document.getElementById(`ticket-${el}`);
-
-                console.log(ticketList);
                 ticketList.classList.add(style);
             })
         }

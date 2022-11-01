@@ -8,7 +8,6 @@ const TopicPage = () => {
     const nswr = useParams();
     const {idTopic} = nswr
 
-    console.log(idTopic);
     const [topic, setTopic] = useState(idTopic.replace(/\w/g, ''));
     const [num, setNum] = useState(+idTopic.replace(/\W/g, ''))
     

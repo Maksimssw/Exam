@@ -3,3 +3,10 @@
 .ticket{
     padding: 40px 0;
 }
+
+
+@media screen and (max-width: 425px) {
+    .ticket{
+        padding: 0;
+    }
+}

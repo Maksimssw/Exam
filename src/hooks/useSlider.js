@@ -6,24 +6,28 @@ const useSlider = (width, wholTicket, exam) => {
     const [widthTranslate, setWidthTranslate] = useState('fit-content');
     const [translateX, setTranslateX] = useState(0);
 
+    // Ширина слайдера 
+    const [widSlider, setWidSlider] = useState()
+
     useEffect(() => {
-        const wrapp = document.querySelector('.questions').offsetWidth;
+
+        setWidSlider(document.querySelector('.questions').offsetWidth);
+        const width = document.querySelector('.questions').offsetWidth;
+
         const item = document.querySelectorAll('.question');
         const res = document.querySelectorAll('.results');
-        
-        console.log(item);
+
         item.forEach((el) => {
-            el.style.width = wrapp + 'px';
+            el.style.width = widSlider + 'px';
         })
 
         res.forEach((el)=> {
-            el.style.width = wrapp + 'px';
+            el.style.width = width + 'px';
         })
-    }, [2])
+    }, [])
 
     // Скролл к следующему вопросу
     const numberProcessing = (num) => {
-        console.log(num)
         try{
             const res = +document.getElementById(num).getAttribute('data-list')
             setTranslateX((res + 1) * width.current.offsetWidth - width.current.offsetWidth);
@@ -219,7 +223,11 @@ const useSlider = (width, wholTicket, exam) => {
         const img = image.replace(/.\Dimages\D/, '');
 
         return(
-            <li key={i} className='question' data-ques={i + 1}>
+            <li 
+                key={i} 
+                className='question' 
+                data-ques={i + 1}
+                style={{width: widSlider}}>
                 <div className='question__info'>
                     <p className='question__ticket'>{ticket_number}</p>
                     <p className='question__title'>{title}</p>

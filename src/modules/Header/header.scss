@@ -43,3 +43,14 @@
         margin-bottom: 30px;
     }
 }
+
+@media screen and (max-width: 425px) {
+    .header{
+        &__heading{
+            font-size: 18px;
+        }
+        &__title{
+            font-size: 24px;
+        }
+    }
+}
